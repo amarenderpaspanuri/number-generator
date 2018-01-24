@@ -16,7 +16,8 @@ import static com.number.generator.constants.NumberConstants.MIN_COLUMN_NUMBERS;
 public final class FlagUtil {
 
 	public static List<RandomNumber> randomNumbers;
-	private final static boolean printFlag = true;
+	
+	private final static boolean printFlag = false;
 	
 	public static void generate_flag_numbers(){
 		printNumbers(randomNumbers, "");
@@ -233,6 +234,7 @@ public final class FlagUtil {
 		printNumbers(selectedNumbers, "All Flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
+	
 	public static void printNumbers(List<RandomNumber> selectedNumbers, String str) {
 		log(str + selectedNumbers.size(), printFlag);
 		for(RandomNumber randomNumber : selectedNumbers) {

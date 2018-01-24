@@ -24,6 +24,8 @@ public final class WeightageUtil {
 
 	public static List<RandomNumber> randomNumbers;
 	
+	private static final boolean printFlag = false;
+	
 	public static void add_system_weightage() {
 		for(Map.Entry<Integer, Integer> entry : SYSTEM_WEIGHTAGE.entrySet()) {
 			if(entry.getKey() <= MAX_MAIN_NUMBERS ) {
@@ -106,7 +108,7 @@ public final class WeightageUtil {
 			newIndex = rand.nextInt(size);
 		}
 		
-		log("Random Index: " + newIndex, true);
+		log("Random Index: " + newIndex, printFlag);
 		return newIndex;
 	}
 	

@@ -46,7 +46,7 @@ public class NumberGenerator {
 			generate_supplementary_number();
 		}
 		
-		printNumbers(finalNumbers);
+		printNumbers();
 	}
 	
 	private static void initialize() {

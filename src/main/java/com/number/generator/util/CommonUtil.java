@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.number.generator.comparator.ValueComparator;
 import com.number.generator.dto.RandomNumber;
+import static com.number.generator.constants.NumberConstants.SUPPLEMENT_REQUIRED;
+import static com.number.generator.util.CommonUtil.log;
+import static com.number.generator.constants.NumberConstants.MAIN_NUMBER_SIZE;
 
 public final class CommonUtil {
 
@@ -55,12 +60,6 @@ public final class CommonUtil {
 		
 		log("getLastDigit() method End: " + result, false);
 		return result;
-	}
-	
-	public static void log(String message, boolean flag) {
-		if(flag) {
-			System.out.println(message);
-		}
 	}
 	
 	public static List<RandomNumber> get_list_copy(List<RandomNumber> list) {
@@ -159,11 +158,47 @@ public final class CommonUtil {
 		return randomNumbersCopy;
 	}
 	
-	public static void printNumbers(List<ArrayList<RandomNumber>> finalNumbers) {
+	public static void printNumbers(List<RandomNumber> randomNumbers, boolean flag) {
+		for(RandomNumber randomNumber : randomNumbers) {
+			printNumber(randomNumber, flag);
+		}
+	}
+	
+	public static void printNumber(RandomNumber randomNumber, boolean flag) {
+		String message = "value: " + randomNumber.getValue() + 
+				", isDefault: " + randomNumber.isDefault() + 
+				", isEquals: " + randomNumber.isEquals() + 
+				", isMultiple: " + randomNumber.isMultiple() + 
+				", isEndsWith: " + randomNumber.isEndsWith() + 
+				", isAddsWith: " + randomNumber.isAddsWith() +
+				", isAverage: " + randomNumber.isAverage();
+		log(message, flag);
+	}
+	
+	public static void printNumbers() {
 		log("Total size: " + finalNumbers.size(), true);
 		for (ArrayList<RandomNumber> numbers : finalNumbers) {
-			log(get_sorted_numbers(numbers, new ValueComparator()).toString(), true);
-			String str = "";
+			
+			RandomNumber supplemantaryNumber = null;
+			if(SUPPLEMENT_REQUIRED && numbers.size() > MAIN_NUMBER_SIZE) {
+				supplemantaryNumber = numbers.get(numbers.size() - 1);
+				numbers.remove(numbers.size() - 1);
+			}
+			
+			String numbersStr = null;
+			if(supplemantaryNumber != null) {
+				numbersStr = StringUtils.join(numbers, " | ") + " | --> " + supplemantaryNumber;
+			} else {
+				numbersStr = StringUtils.join(numbers, " | ");
+			}
+			log(numbersStr, true);
+			//log("", true);
+		}
+	}
+	
+	public static void log(String message, boolean flag) {
+		if(flag) {
+			System.out.println(message);
 		}
 	}
 }

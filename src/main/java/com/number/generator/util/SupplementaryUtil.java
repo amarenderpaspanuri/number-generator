@@ -6,16 +6,21 @@ import static com.number.generator.constants.NumberConstants.SUPPLEMENTARY_WEIGH
 import static com.number.generator.constants.NumberConstants.ADD_SUPPLEMENTARY_WEIGHTAGE;
 import static com.number.generator.util.CommonUtil.addDigits;
 import static com.number.generator.util.CommonUtil.getString;
+import static com.number.generator.util.CommonUtil.printNumbers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import com.number.generator.comparator.WeightageComparator;
 import com.number.generator.dto.RandomNumber;
 
 public final class SupplementaryUtil {
 
 	public static List<ArrayList<RandomNumber>> finalNumbers;
 	private static List<RandomNumber> supplementaryNumbers;
+	
+	private static final boolean printFlag = true;
 	
 	public static void generate_supplementary_number(){
 		for(ArrayList<RandomNumber> list : finalNumbers) {
@@ -44,6 +49,7 @@ public final class SupplementaryUtil {
 		if(SUPPLEMENTARY_WEIGHTAGE.get(average) != null) {
 			RandomNumber supplementaryNumber = supplementaryNumbers.get(average - 1);
 			supplementaryNumber.setAverage(true);
+			supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
 		}
 	}
 	
@@ -52,6 +58,7 @@ public final class SupplementaryUtil {
 			if(finalNumber.getValue() <= MAX_SUPPLEMENTARY_NUMBERS) {
 				RandomNumber supplementaryNumber = supplementaryNumbers.get(finalNumber.getValue() - 1);
 				supplementaryNumber.setEquals(true);
+				supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
 			}
 		}
 	}
@@ -61,6 +68,7 @@ public final class SupplementaryUtil {
 			for (RandomNumber supplementaryNumber : supplementaryNumbers) {
 				if ((finalNumber.getValue() % supplementaryNumber.getValue()) == 0) {
 					supplementaryNumber.setMultiple(true);
+					supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
 				}
 			}
 		}
@@ -75,7 +83,8 @@ public final class SupplementaryUtil {
 				String[] supplementaryNumberArray = getString(supplementaryNumber.getValue()).split("");
 				String supplementaryNumberEndsWith = supplementaryNumberArray[supplementaryNumberArray.length - 1];
 				if (finalNumberEndsWith.equals(supplementaryNumberEndsWith)) {
-					supplementaryNumber.setAddsWith(true);
+					supplementaryNumber.setEndsWith(true);
+					supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
 				}
 			}
 		}
@@ -87,18 +96,37 @@ public final class SupplementaryUtil {
 				int finalNumberValue = addDigits(finalNumber.getValue());
 				if (finalNumber.getValue() > 9) {
 					RandomNumber supplementaryNumber = supplementaryNumbers.get(finalNumberValue - 1);
-					supplementaryNumber.setEquals(true);
+					supplementaryNumber.setAddsWith(true);
+					supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
 				}
 			}
 		}
 	}
 	
 	private static void add_supplementary_number(ArrayList<RandomNumber> finalNumbers) {
+		/*Collections.sort(supplementaryNumbers, new WeightageComparator());
+		finalNumbers.add(supplementaryNumbers.get(0));*/
 		for (RandomNumber number : supplementaryNumbers) {
-			if (number.isAverage() && number.isEquals() && number.isMultiple() && number.isEndsWith() && number.isAddsWith()) {
+			/*if (number.isAverage() && number.isEquals() && number.isMultiple() && number.isEndsWith() && number.isAddsWith()) {
+				finalNumbers.add(number);
+			} else if (number.isEquals() && number.isMultiple() && number.isEndsWith() && number.isAddsWith()) {
+				finalNumbers.add(number);
+			} else if (number.isEquals() && number.isMultiple() && number.isEndsWith() && number.isAddsWith()) {
+				finalNumbers.add(number);
+			} else if (number.isEquals() && number.isMultiple() && number.isEndsWith()) {
+				finalNumbers.add(number);
+			} else if (number.isEquals() && number.isMultiple() && number.isAddsWith()) {
+				finalNumbers.add(number);
+			} else if (number.isAverage()) {
+				finalNumbers.add(number);
+			} else if (number.isAverage()) {
+				finalNumbers.add(number);
+			} else*/ if (number.isAverage()) {
 				finalNumbers.add(number);
 			}
 		}
+		
+		/*printNumbers(supplementaryNumbers, printFlag);*/
 	}
 	
 	private static int getSum(ArrayList<RandomNumber> list) {

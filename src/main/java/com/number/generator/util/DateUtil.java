@@ -21,6 +21,8 @@ public final class DateUtil {
 
 	public static List<RandomNumber> randomNumbers;
 	
+	private final static boolean printFlag = false;
+	
 	public static void add_dates_weightage() {
 		for (String date : DATES) {
 			String[] array = date.split("-");
@@ -69,7 +71,7 @@ public final class DateUtil {
 	}
 
 	private static void updateWeightage(int value) {
-		log("updateWeightage() method Start: " + value, false);
+		log("updateWeightage() method Start: " + value, printFlag);
 		int tempNumber;
 		List<Integer> list = new ArrayList<Integer>();
 		if (value <= 9) {
@@ -113,7 +115,7 @@ public final class DateUtil {
 	}
 
 	private static void isEquals(Integer value) {
-		log("In isEquals() method: " + value, false);
+		log("In isEquals() method: " + value, printFlag);
 		for (RandomNumber randomNumber : randomNumbers) {
 			if ((randomNumber.getValue() == value)) {
 				updateNumber(randomNumber, false, USE_FLAG, false, false, false);
@@ -122,7 +124,7 @@ public final class DateUtil {
 	}
 
 	private static void isMultiple(Integer value) {
-		log("In isMultiple() method: " + value, false);
+		log("In isMultiple() method: " + value, printFlag);
 		if (value > 1) {
 			for (RandomNumber randomNumber : randomNumbers) {
 				if ((randomNumber.getValue() % value) == 0 && (randomNumber.getValue() != value)) {
@@ -133,7 +135,7 @@ public final class DateUtil {
 	}
 
 	private static void isEndsWith(Integer value) {
-		log("isEndsWith() method Start: " + value, false);
+		log("isEndsWith() method Start: " + value, printFlag);
 		for (RandomNumber randomNumber : randomNumbers) {
 			String[] array = getString(randomNumber.getValue()).split("");
 			if (array[array.length - 1].equals(getString(value))) {
@@ -143,7 +145,7 @@ public final class DateUtil {
 	}
 
 	private static void isAddsWith(Integer value) {
-		log("In addDigitsWith() method: " + value, false);
+		log("In addDigitsWith() method: " + value, printFlag);
 		for (RandomNumber randomNumber : randomNumbers) {
 			if (randomNumber.getValue() > 9 && value == addDigits(randomNumber.getValue())) {
 				updateNumber(randomNumber, false, false, false, false, USE_FLAG);

@@ -2,7 +2,7 @@ package com.number.generator.dto;
 
 import static com.number.generator.util.CommonUtil.getString;
 
-public class RandomNumber implements Comparable<RandomNumber> {
+public class RandomNumber {
 	
 	int value;
 	int weightage;
@@ -60,18 +60,6 @@ public class RandomNumber implements Comparable<RandomNumber> {
 	}
 	public void setAverage(boolean isAverage) {
 		this.isAverage = isAverage;
-	}
-	
-	public int compareTo(RandomNumber randomNumber) {
-
-		int value = randomNumber.getValue();
-
-		//ascending order
-		return this.value - value;
-
-		//descending order
-		//return compareQuantity - this.quantity;
-
 	}
 	
 	@Override
