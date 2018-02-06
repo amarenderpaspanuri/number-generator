@@ -144,15 +144,15 @@ public final class ColumnNumbers {
 			if(extraColumnCount > 0) {
 				Random random = new Random();
 				count = rowCount * columnCount;
-				while (count <= TOTAL_NUMBERS) {
+				while (count < TOTAL_NUMBERS) {
 					int[] row = numbers[random.nextInt(numbers.length)];
 					int index = random.nextInt(row.length - columnCount) + columnCount;
 					int number = row[index];
 					if (number != 0) {
 						continue;
 					} else {
-						row[index] = count;
-						count++;
+						row[index] = ++count;
+						//count++;
 					}
 				}
 			}
