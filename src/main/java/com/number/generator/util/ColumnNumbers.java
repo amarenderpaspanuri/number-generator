@@ -1,15 +1,8 @@
 package com.number.generator.util;
 
-import static com.number.generator.constants.NumberConstants2.DUPLICATES_ALLOWED;
-import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS_PER_ROW;
-import static com.number.generator.constants.NumberConstants2.TOTAL_NUMBERS;
-import static com.number.generator.constants.NumberConstants2.MAX_ROWS;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import static com.number.generator.constants.NumberConstants2.*;
 
 public final class ColumnNumbers {
 
@@ -19,7 +12,7 @@ public final class ColumnNumbers {
 		generate_row_numbers();
 	}
 
-	public static void generate_row_numbers() {
+	/*public static void generate_row_numbers() {
 		int rowCount = 1;
 		while (rowCount <= TOTAL_NUMBERS) {
 			if(TOTAL_NUMBERS % rowCount == 0) {
@@ -38,7 +31,7 @@ public final class ColumnNumbers {
 			}
 			rowCount++;
 		}
-	}
+	}*/
 	
 	public static void generate_numbers(final int[][] numbers) {
 		if (numbers[0].length == 1) {
@@ -59,7 +52,7 @@ public final class ColumnNumbers {
 				int columnIndex = 0;
 				int number = numbers[rowIndex][columnIndex];
 				while (number == 0) {
-					rowIndex = random.nextInt(numbers.length);
+					//rowIndex = random.nextInt(numbers.length);
 					number = numbers[rowIndex][columnIndex];
 				}
 				if (DUPLICATES_ALLOWED) {
@@ -87,7 +80,7 @@ public final class ColumnNumbers {
 
 				int number = numbers[rowIndex][columnIndex];
 				while (number == 0) {
-					rowIndex = random.nextInt(numbers.length);
+					//rowIndex = random.nextInt(numbers.length);
 					columnIndex = random.nextInt(numbers[rowIndex].length);
 					number = numbers[rowIndex][columnIndex];
 				}
@@ -128,26 +121,43 @@ public final class ColumnNumbers {
 		return new HashSet<Integer>(row1).equals(new HashSet<Integer>(row2));
 	}
 	
-	/*public static void generate_column_numbers() {
-	//int maxColumns = Math.round(TOTAL_NUMBERS / MAX_NUMBERS_PER_ROW);
-	int maxColumns = TOTAL_NUMBERS;
+	public static void generate_row_numbers() {
+		//int maxColumns = Math.round(TOTAL_NUMBERS / MAX_NUMBERS_PER_ROW);
+		int maxColumns = TOTAL_NUMBERS;
 
-	int columnCount = 1;
-	while (columnCount <= maxColumns) {
-		int rowCount = (TOTAL_NUMBERS % columnCount == 0) ? TOTAL_NUMBERS / columnCount
-				: (TOTAL_NUMBERS / columnCount) + 1;
-		int[][] numbers = new int[rowCount][columnCount];
-		int count = 1;
-		for (int i = 0; i < rowCount; i++) {
-			for (int j = 0; j < columnCount; j++) {
-				if (count <= TOTAL_NUMBERS) {
-					numbers[i][j] = count;
-					count++;
+		int columnCount = 1;
+		while (columnCount <= maxColumns) {
+			/*int rowCount = (TOTAL_NUMBERS % columnCount == 0) ? TOTAL_NUMBERS / columnCount
+					: (TOTAL_NUMBERS / columnCount) + 1;*/
+			int rowCount = TOTAL_NUMBERS / columnCount;
+			int extraColumnCount = TOTAL_NUMBERS - (rowCount * columnCount);
+			int[][] numbers = new int[rowCount][columnCount + extraColumnCount];
+			int count = 1;
+			for (int i = 0; i < rowCount; i++) {
+				for (int j = 0; j < columnCount; j++) {
+					if (count <= TOTAL_NUMBERS) {
+						numbers[i][j] = count;
+						count++;
+					}
 				}
 			}
+			if(extraColumnCount > 0) {
+				Random random = new Random();
+				count = rowCount * columnCount;
+				while (count <= TOTAL_NUMBERS) {
+					int[] row = numbers[random.nextInt(numbers.length)];
+					int index = random.nextInt(row.length - columnCount) + columnCount;
+					int number = row[index];
+					if (number != 0) {
+						continue;
+					} else {
+						row[index] = count;
+						count++;
+					}
+				}
+			}
+			generate_numbers(numbers);
+			columnCount++;
 		}
-		generate_numbers(numbers);
-		columnCount++;
 	}
-}*/
 }
