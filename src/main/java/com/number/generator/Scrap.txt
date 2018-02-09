@@ -1,0 +1,20 @@
+/*public static void generate_row_numbers() {
+		int rowCount = 1;
+		while (rowCount <= TOTAL_NUMBERS) {
+			if(TOTAL_NUMBERS % rowCount == 0) {
+				int columnCount = TOTAL_NUMBERS / rowCount;
+				int[][] numbers = new int[rowCount][columnCount];
+				int count = 1;
+				for (int i = 0; i < rowCount; i++) {
+					for (int j = 0; j < columnCount; j++) {
+						if (count <= TOTAL_NUMBERS) {
+							numbers[i][j] = count;
+							count++;
+						}
+					}
+				}
+				generate_numbers(numbers);
+			}
+			rowCount++;
+		}
+	}*/
