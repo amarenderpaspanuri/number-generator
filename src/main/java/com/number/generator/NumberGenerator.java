@@ -9,11 +9,15 @@ import static com.number.generator.util.WeightageUtil.add_my_weightage;
 import static com.number.generator.util.WeightageUtil.add_system_weightage;
 import static com.number.generator.util.WeightageUtil.generate_weightage_numbers;
 import static com.number.generator.util.FlagUtil.generate_flag_numbers;
-import static com.number.generator.constants.NumberConstants.USE_FLAG;
 import static com.number.generator.constants.NumberConstants.USE_DATES;
 import static com.number.generator.constants.NumberConstants.SUPPLEMENT_REQUIRED;
 import static com.number.generator.util.SupplementaryUtil.generate_supplementary_number;
-
+import static com.number.generator.constants.NumberConstants.GENERATE_WEIGHTAGE_NUMBERS;
+import static com.number.generator.constants.NumberConstants.GENERATE_COLUMN_NUMBERS;
+import static com.number.generator.constants.NumberConstants.GENERATE_DOZEN_NUMBERS;
+import static com.number.generator.constants.NumberConstants.GENERATE_FLAG_NUMBERS;
+import static com.number.generator.constants.NumberConstants.ADD_SYSTEM_WEIGHTAGE;
+import static com.number.generator.constants.NumberConstants.ADD_MY_WEIGHTAGE;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +75,13 @@ public class NumberGenerator {
 	}
 	
 	private static void add_weightages() {
-		add_system_weightage();
-		add_my_weightage();
+		if(ADD_SYSTEM_WEIGHTAGE) {
+			add_system_weightage();
+		}
+		
+		if(ADD_MY_WEIGHTAGE) {
+			add_my_weightage();
+		}
 		
 		if(USE_DATES) {
 			add_dates_weightage();
@@ -83,16 +92,24 @@ public class NumberGenerator {
 		//rules
 		
 		// Weightage - 14
-		generate_weightage_numbers();
+		if(GENERATE_WEIGHTAGE_NUMBERS) {
+			generate_weightage_numbers();
+		}
+		
 		
 		//columns - 6
-		generate_column_numbers();
+		if(GENERATE_COLUMN_NUMBERS) {
+			generate_column_numbers();
+		}
+		
 		
 		//3. dozens - 6
-		generate_dozen_numbers();
+		if(GENERATE_DOZEN_NUMBERS) {
+			generate_dozen_numbers();
+		}
 		
 		//4. isDefault/ isEquals / isEndsWith/ isAddsWith/ isMultiple - 11
-		if(USE_FLAG) {
+		if(GENERATE_FLAG_NUMBERS) {
 			generate_flag_numbers();
 		}
 	}
