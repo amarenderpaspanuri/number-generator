@@ -38,9 +38,10 @@ public final class ColumnNumbers {
 				}
 			}
 			if(extraRowCount > 0) {
-				Random random = new Random();
+				//Random random = new Random();
 				count = columnCount * rowCount;
 				while (count < TOTAL_NUMBERS) {
+					Random random = new Random();
 					int[] row = numbers[random.nextInt(numbers.length)];
 					int index = random.nextInt(row.length - columnCount) + columnCount;
 					int number = row[index];
@@ -68,13 +69,15 @@ public final class ColumnNumbers {
 		int rowCount = 1;
 		while (rowCount <= MAX_ROWS) {
 			final List<Integer> row = new ArrayList<Integer>();
-			Random random = new Random();
+			//Random random = new Random();
 			int count = 1;
 			while (count <= MAX_NUMBERS_PER_ROW) {
 				int rowIndex = 0;
+				Random random = new Random();
 				int columnIndex = random.nextInt(numbers[rowIndex].length);
 				int number = numbers[rowIndex][columnIndex];
 				while (number == 0) {
+					random = new Random();
 					columnIndex = random.nextInt(numbers[rowIndex].length);
 					number = numbers[rowIndex][columnIndex];
 				}
@@ -117,20 +120,23 @@ public final class ColumnNumbers {
 				}
 			}
 
-			Random random = new Random();
+			//Random random = new Random();
 
 			for(int number : extraList) {
+				Random random = new Random();
 				outerList.get(random.nextInt(outerList.size())).add(number);
 			}
 
 			final List<Integer> row = new ArrayList<Integer>();
 			int count = 1;
 			while (count <= MAX_NUMBERS_PER_ROW) {
+				Random random = new Random();
 				int randomOuterIndex = random.nextInt(outerList.size());
 				int randomInnerIndex = random.nextInt(outerList.get(randomOuterIndex).size());
 
 				int number = outerList.get(randomOuterIndex).get(randomInnerIndex);
 				while (number == 0) {
+					random = new Random();
 					randomInnerIndex = random.nextInt(outerList.get(randomOuterIndex).size());
 					number = outerList.get(randomOuterIndex).get(randomInnerIndex);
 				}
