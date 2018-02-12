@@ -11,6 +11,7 @@ import com.number.generator.util.RowNumbers;
 
 import static com.number.generator.constants.NumberConstants2.FINAL_ROW_COUNT;
 import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS_PER_ROW;
+import static com.number.generator.constants.NumberConstants2.TOTAL_NUMBERS;
 
 public class NumberGenerator2 {
 
@@ -19,7 +20,7 @@ public class NumberGenerator2 {
 			List<ArrayList<Integer>> rows = new ArrayList<ArrayList<Integer>>();
 			
 			RowNumbers.rows = rows;
-			RowNumbers.generate_row_numbers();
+			//RowNumbers.generate_row_numbers();
 			
 			ColumnNumbers.rows = rows;
 			ColumnNumbers.generate_column_numbers();
@@ -52,20 +53,12 @@ public class NumberGenerator2 {
 	
 	public static boolean checkIsValidNumbers(Map<Integer, Integer> map, int rowCount) {
 		int totalNumbers = rowCount * MAX_NUMBERS_PER_ROW;
-		//int average = Math.round(totalNumbers / rowCount);
-		int average = Math.round(rowCount / MAX_NUMBERS_PER_ROW);
+		int average = Math.round((totalNumbers / TOTAL_NUMBERS) - (MAX_NUMBERS_PER_ROW / 2));
 		for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
-			if(!(entry.getValue() >= 9)) {
+			if(!(entry.getValue() >= average)) {
 				return false;
 			}
 		}
-		/*for(int number : row) {
-			if(map.containsKey(number)) {
-				map.put(number, map.get(number) + 1);
-			} else {
-				map.put(number, 1);
-			}
-		}*/
 		return true;
 	}
 }
