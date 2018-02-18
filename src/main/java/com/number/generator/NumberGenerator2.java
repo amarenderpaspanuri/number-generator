@@ -9,9 +9,9 @@ import java.util.Random;
 import com.number.generator.util.ColumnNumbers;
 import com.number.generator.util.RowNumbers;
 
-import static com.number.generator.constants.NumberConstants2.FINAL_ROW_COUNT;
+import static com.number.generator.constants.NumberConstants2.ROWS_REQUIRED;
 import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS_PER_ROW;
-import static com.number.generator.constants.NumberConstants2.TOTAL_NUMBERS;
+import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS;
 
 public class NumberGenerator2 {
 
@@ -20,7 +20,7 @@ public class NumberGenerator2 {
 			List<ArrayList<Integer>> rows = new ArrayList<ArrayList<Integer>>();
 			
 			RowNumbers.rows = rows;
-			//RowNumbers.generate_row_numbers();
+			RowNumbers.generate_row_numbers();
 			
 			ColumnNumbers.rows = rows;
 			ColumnNumbers.generate_column_numbers();
@@ -31,10 +31,22 @@ public class NumberGenerator2 {
 			}
 			
 			if(checkIsValidNumbers(map, rows.size())) {
-				for(ArrayList<Integer> row : rows) {
-					System.out.println(row);
+				int totalCount = rows.size();
+				Random random = new Random();
+				if(ROWS_REQUIRED != 0) {
+					for(int i = 0; i < ROWS_REQUIRED; i++) {
+						int randomIndex = random.nextInt(rows.size());
+						System.out.println(rows.get(randomIndex));
+						rows.remove(randomIndex);
+					}
+				} else {
+					for(ArrayList<Integer> row : rows) {
+						System.out.println(row);
+					}
 				}
-				System.out.println("Total rows : " + rows.size());
+				
+				System.out.println("Total rows : " + totalCount);
+				System.out.println("Required rows : " + (ROWS_REQUIRED != 0 ? ROWS_REQUIRED : rows.size()));
 				System.out.println(map);
 				break;
 			}
@@ -53,9 +65,9 @@ public class NumberGenerator2 {
 	
 	public static boolean checkIsValidNumbers(Map<Integer, Integer> map, int rowCount) {
 		int totalNumbers = rowCount * MAX_NUMBERS_PER_ROW;
-		int average = Math.round((totalNumbers / TOTAL_NUMBERS) - (MAX_NUMBERS_PER_ROW / 2));
+		int average = Math.round((totalNumbers / MAX_NUMBERS) - (MAX_NUMBERS_PER_ROW / 2));
 		for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
-			if(!(entry.getValue() >= average)) {
+			if((entry.getValue() < average) || (entry.getValue() > average * 1.7)) {
 				return false;
 			}
 		}
