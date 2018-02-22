@@ -1,12 +1,14 @@
 package com.number.generator.util;
 
+import static com.number.generator.constants.NumberConstants.ADD_SUPPLEMENTARY_WEIGHTAGE;
 import static com.number.generator.constants.NumberConstants.MAIN_NUMBER_SIZE;
 import static com.number.generator.constants.NumberConstants.MAX_SUPPLEMENTARY_NUMBERS;
 import static com.number.generator.constants.NumberConstants.SUPPLEMENTARY_WEIGHTAGE;
-import static com.number.generator.constants.NumberConstants.ADD_SUPPLEMENTARY_WEIGHTAGE;
 import static com.number.generator.util.CommonUtil.addDigits;
 import static com.number.generator.util.CommonUtil.getString;
+import static com.number.generator.util.CommonUtil.log;
 import static com.number.generator.util.CommonUtil.printNumbers;
+import static com.number.generator.util.CommonUtil.removeItemsInListFromList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +48,9 @@ public final class SupplementaryUtil {
 	
 	private static void isAverage(ArrayList<RandomNumber> finalNumbers) {
 		int average = Math.round(getSum(finalNumbers)/MAIN_NUMBER_SIZE);
+		/*if(average > MAX_MAIN_NUMBERS) {
+			average = addDigits(average);
+		}*/
 		if(SUPPLEMENTARY_WEIGHTAGE.get(average) != null) {
 			RandomNumber supplementaryNumber = supplementaryNumbers.get(average - 1);
 			supplementaryNumber.setAverage(true);
@@ -66,9 +71,16 @@ public final class SupplementaryUtil {
 	private static void isMultiple(ArrayList<RandomNumber> finalNumbers) {
 		for (RandomNumber finalNumber : finalNumbers) {
 			for (RandomNumber supplementaryNumber : supplementaryNumbers) {
-				if ((finalNumber.getValue() % supplementaryNumber.getValue()) == 0) {
-					supplementaryNumber.setMultiple(true);
-					supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
+				if(supplementaryNumber.getValue() != 1) {
+					if ((finalNumber.getValue() % supplementaryNumber.getValue()) == 0) {
+						supplementaryNumber.setMultiple(true);
+						supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
+					}
+				} else {
+					if(finalNumber.getValue() == 1) {
+						supplementaryNumber.setMultiple(true);
+						supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
+					}
 				}
 			}
 		}
@@ -92,41 +104,48 @@ public final class SupplementaryUtil {
 
 	private static void isAddsWith(ArrayList<RandomNumber> finalNumbers) {
 		for (RandomNumber finalNumber : finalNumbers) {
-			if (finalNumber.getValue() > 9) {
+			/*if (finalNumber.getValue() > 9) {*/
 				int finalNumberValue = addDigits(finalNumber.getValue());
-				if (finalNumber.getValue() > 9) {
-					RandomNumber supplementaryNumber = supplementaryNumbers.get(finalNumberValue - 1);
-					supplementaryNumber.setAddsWith(true);
-					supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
+				for (RandomNumber supplementaryNumber : supplementaryNumbers) {
+					int supplementaryNumberValue = addDigits(supplementaryNumber.getValue());
+					if (finalNumberValue == supplementaryNumberValue) {
+						supplementaryNumber.setAddsWith(true);
+						supplementaryNumber.setWeightage(supplementaryNumber.getWeightage() + 1);
+					}
 				}
-			}
+			/*}*/
 		}
 	}
 	
 	private static void add_supplementary_number(ArrayList<RandomNumber> finalNumbers) {
-		/*Collections.sort(supplementaryNumbers, new WeightageComparator());
-		finalNumbers.add(supplementaryNumbers.get(0));*/
-		for (RandomNumber number : supplementaryNumbers) {
-			/*if (number.isAverage() && number.isEquals() && number.isMultiple() && number.isEndsWith() && number.isAddsWith()) {
-				finalNumbers.add(number);
-			} else if (number.isEquals() && number.isMultiple() && number.isEndsWith() && number.isAddsWith()) {
-				finalNumbers.add(number);
-			} else if (number.isEquals() && number.isMultiple() && number.isEndsWith() && number.isAddsWith()) {
-				finalNumbers.add(number);
-			} else if (number.isEquals() && number.isMultiple() && number.isEndsWith()) {
-				finalNumbers.add(number);
-			} else if (number.isEquals() && number.isMultiple() && number.isAddsWith()) {
-				finalNumbers.add(number);
-			} else if (number.isAverage()) {
-				finalNumbers.add(number);
-			} else if (number.isAverage()) {
-				finalNumbers.add(number);
-			} else*/ if (number.isAverage()) {
-				finalNumbers.add(number);
+		log("---------------------------------------------------------------------------------------------------------------------------------", true);
+		boolean addedFlag = false;
+		RandomNumber number = null;
+		
+		removeItemsInListFromList(supplementaryNumbers, finalNumbers);
+		
+		Collections.sort(supplementaryNumbers, new WeightageComparator());
+		printNumbers(supplementaryNumbers, printFlag);
+		
+		for (RandomNumber supplementaryNumber : supplementaryNumbers) {
+			if (supplementaryNumber.isAverage()) {
+				addedFlag = true;
+			} else if (supplementaryNumber.isMultiple() && supplementaryNumber.isEndsWith() && supplementaryNumber.isAddsWith()) {
+				addedFlag = true;
+			} else if (supplementaryNumber.isEndsWith() && supplementaryNumber.isAddsWith()) {
+				addedFlag = true;
+			} 
+			
+			if (addedFlag) {
+				number = supplementaryNumber;
+				break;
 			}
 		}
-		
-		/*printNumbers(supplementaryNumbers, printFlag);*/
+		if (!addedFlag) {
+			finalNumbers.add(supplementaryNumbers.get(0));
+		} else {
+			finalNumbers.add(number);
+		}
 	}
 	
 	private static int getSum(ArrayList<RandomNumber> list) {
