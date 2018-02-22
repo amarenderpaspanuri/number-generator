@@ -139,7 +139,7 @@ public final class CommonUtil {
 	    return integerList;
 	}
 	
-	private static boolean listContainsNumber(List<RandomNumber> list, RandomNumber newNumber) {
+	public static boolean listContainsNumber(List<RandomNumber> list, RandomNumber newNumber) {
 		for(RandomNumber existingNumber : list) {
 			if(existingNumber.getValue() == newNumber.getValue()) {
 				return true;
@@ -158,6 +158,17 @@ public final class CommonUtil {
 		return randomNumbersCopy;
 	}
 	
+	public static void removeItemsInListFromList(List<RandomNumber> inList, List<RandomNumber> fromList) {
+		ArrayList<RandomNumber> removeItems = new ArrayList<RandomNumber>();
+		for (RandomNumber fromItem : fromList) {
+			for (RandomNumber inItem : inList) {
+				if(fromItem.getValue() == inItem.getValue()) {
+					removeItems.add(inItem);
+				}
+			}
+		}
+		inList.removeAll(removeItems);
+	}
 	public static void printNumbers(List<RandomNumber> randomNumbers, boolean flag) {
 		for(RandomNumber randomNumber : randomNumbers) {
 			printNumber(randomNumber, flag);
@@ -166,7 +177,8 @@ public final class CommonUtil {
 	
 	public static void printNumber(RandomNumber randomNumber, boolean flag) {
 		String message = "value: " + randomNumber.getValue() + 
-				", isDefault: " + randomNumber.isDefault() + 
+				", Weightage: " + randomNumber.getWeightage() + 
+				//", isDefault: " + randomNumber.isDefault() + 
 				", isEquals: " + randomNumber.isEquals() + 
 				", isMultiple: " + randomNumber.isMultiple() + 
 				", isEndsWith: " + randomNumber.isEndsWith() + 
@@ -185,6 +197,7 @@ public final class CommonUtil {
 				numbers.remove(numbers.size() - 1);
 			}
 			
+			Collections.sort(numbers, new ValueComparator());
 			String numbersStr = null;
 			if(supplemantaryNumber != null) {
 				numbersStr = StringUtils.join(numbers, " | ") + " | --> " + supplemantaryNumber;
