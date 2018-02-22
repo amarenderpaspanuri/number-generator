@@ -51,7 +51,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "All Flags size: ");
+		printNumbers(selectedNumbers, "All true flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -68,7 +68,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "isEquals Flags size: ");
+		printNumbers(selectedNumbers, "isEquals flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -85,7 +85,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "isMultiple Flags size: ");
+		printNumbers(selectedNumbers, "isMultiple flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -102,7 +102,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "isEndsWith size: ");
+		printNumbers(selectedNumbers, "isEndsWith flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -119,7 +119,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "isAddsWith size: ");
+		printNumbers(selectedNumbers, "isAddsWith flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -137,7 +137,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "All Flags size: ");
+		printNumbers(selectedNumbers, "isDefault and isEquals flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -155,7 +155,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "All Flags size: ");
+		printNumbers(selectedNumbers, "isDefault and isMultiple flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -173,7 +173,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "All Flags size: ");
+		printNumbers(selectedNumbers, "isDefault and isAddsWIth flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -191,7 +191,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "All Flags size: ");
+		printNumbers(selectedNumbers, "isEquals and isMultiple flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -209,7 +209,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "All Flags size: ");
+		printNumbers(selectedNumbers, "isEquals and isAddsWith flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
@@ -231,7 +231,7 @@ public final class FlagUtil {
 			int diff = MAIN_NUMBER_SIZE - selectedNumbers.size();
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(randomNumbersCopy, diff));
 		}
-		printNumbers(selectedNumbers, "All Flags size: ");
+		printNumbers(selectedNumbers, "All false flags size: ");
 		add_to_final_numbers(get_random_numbers_from_list_by_size(selectedNumbers, MAIN_NUMBER_SIZE));
 	}
 	
