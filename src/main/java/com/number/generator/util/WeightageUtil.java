@@ -89,7 +89,7 @@ public final class WeightageUtil {
 			}
 		}
 		
-		for(int i=0; i < listOfList.size(); i++) {
+		for(int i = 0; i < listOfList.size(); i++) {
 			List<RandomNumber> selectedNumbers = new ArrayList<RandomNumber>();
 			ArrayList<RandomNumber> list = listOfList.get(i);
 			selectedNumbers.addAll(get_random_numbers_from_list_by_size(list, MIN_WEIGHTAGE_NUMBERS));
