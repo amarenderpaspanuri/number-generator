@@ -8,7 +8,8 @@ import static com.number.generator.util.CommonUtil.getLastDigit;
 import static com.number.generator.util.CommonUtil.getString;
 import static com.number.generator.util.CommonUtil.log;
 import static com.number.generator.util.CommonUtil.updateNumber;
-import static com.number.generator.constants.NumberConstants.DATES;
+import static com.number.generator.constants.NumberConstants.IMPORTANT_DATES;
+import static com.number.generator.constants.NumberConstants.ADD_DATE_WEIGHTAGE;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -24,7 +25,7 @@ public final class DateUtil {
 	private final static boolean printFlag = false;
 	
 	public static void add_dates_weightage() {
-		for (String date : DATES) {
+		for (String date : IMPORTANT_DATES) {
 			String[] array = date.split("-");
 			int day = getInt(array[0]);
 			int month = getInt(array[1]);
@@ -118,7 +119,7 @@ public final class DateUtil {
 		log("In isEquals() method: " + value, printFlag);
 		for (RandomNumber randomNumber : randomNumbers) {
 			if ((randomNumber.getValue() == value)) {
-				updateNumber(randomNumber, false, USE_FLAG, false, false, false);
+				updateNumber(randomNumber, ADD_DATE_WEIGHTAGE, USE_FLAG, false, false, false);
 			}
 		}
 	}
@@ -128,7 +129,7 @@ public final class DateUtil {
 		if (value > 1) {
 			for (RandomNumber randomNumber : randomNumbers) {
 				if ((randomNumber.getValue() % value) == 0 && (randomNumber.getValue() != value)) {
-					updateNumber(randomNumber, false, false, USE_FLAG, false, false);
+					updateNumber(randomNumber, ADD_DATE_WEIGHTAGE, false, USE_FLAG, false, false);
 				}
 			}
 		}
@@ -139,7 +140,7 @@ public final class DateUtil {
 		for (RandomNumber randomNumber : randomNumbers) {
 			String[] array = getString(randomNumber.getValue()).split("");
 			if (array[array.length - 1].equals(getString(value))) {
-				updateNumber(randomNumber, false, false, false, USE_FLAG, false);
+				updateNumber(randomNumber, ADD_DATE_WEIGHTAGE, false, false, USE_FLAG, false);
 			}
 		}
 	}
@@ -148,7 +149,7 @@ public final class DateUtil {
 		log("In addDigitsWith() method: " + value, printFlag);
 		for (RandomNumber randomNumber : randomNumbers) {
 			if (randomNumber.getValue() > 9 && value == addDigits(randomNumber.getValue())) {
-				updateNumber(randomNumber, false, false, false, false, USE_FLAG);
+				updateNumber(randomNumber, ADD_DATE_WEIGHTAGE, false, false, false, USE_FLAG);
 			}
 		}
 	}
