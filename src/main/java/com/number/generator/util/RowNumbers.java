@@ -3,7 +3,9 @@ package com.number.generator.util;
 import static com.number.generator.constants.NumberConstants2.DUPLICATES_ALLOWED;
 import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS_PER_ROW;
 import static com.number.generator.constants.NumberConstants2.MAX_ROWS;
-import static com.number.generator.constants.NumberConstants2.TOTAL_NUMBERS;
+import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS;
+import static com.number.generator.constants.NumberConstants2.NEED_SUPPLEMANTARY_NUMBER;
+import static com.number.generator.constants.NumberConstants2.MAX_SUPPLEMTARY_NUMBER;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,17 +23,17 @@ public final class RowNumbers {
 	}
 
 	public static void generate_row_numbers() {
-		int maxColumns = TOTAL_NUMBERS;
+		int maxColumns = MAX_NUMBERS;
 
 		int columnCount = 1;
 		while (columnCount <= maxColumns) {
-			int rowCount = TOTAL_NUMBERS / columnCount;
-			int extraColumnCount = TOTAL_NUMBERS - (rowCount * columnCount);
+			int rowCount = MAX_NUMBERS / columnCount;
+			int extraColumnCount = MAX_NUMBERS - (rowCount * columnCount);
 			int[][] numbers = new int[rowCount][columnCount + extraColumnCount];
 			int count = 1;
 			for (int i = 0; i < rowCount; i++) {
 				for (int j = 0; j < columnCount; j++) {
-					if (count <= TOTAL_NUMBERS) {
+					if (count <= MAX_NUMBERS) {
 						numbers[i][j] = count;
 						count++;
 					}
@@ -40,7 +42,7 @@ public final class RowNumbers {
 			if(extraColumnCount > 0) {
 				//Random random = new Random();
 				count = rowCount * columnCount;
-				while (count < TOTAL_NUMBERS) {
+				while (count < MAX_NUMBERS) {
 					Random random = new Random();
 					int[] row = numbers[random.nextInt(numbers.length)];
 					int index = random.nextInt(row.length - columnCount) + columnCount;
@@ -125,6 +127,9 @@ public final class RowNumbers {
 	}
 
 	public static boolean check_if_row_existz(List<Integer> row) {
+		if(!supplemantaryNumberExists(row)) {
+			return false;
+		}
 		boolean exists = true;
 		if (rows.isEmpty()) {
 			exists = false;
@@ -136,6 +141,7 @@ public final class RowNumbers {
 				}
 			}
 		}
+		
 		if (!exists) {
 			Collections.sort(row);
 			rows.add((ArrayList<Integer>) row);
@@ -145,5 +151,18 @@ public final class RowNumbers {
 
 	private static boolean rowEqualsRow(List<Integer> row1, List<Integer> row2) {
 		return new HashSet<Integer>(row1).equals(new HashSet<Integer>(row2));
+	}
+	
+	private static boolean supplemantaryNumberExists(List<Integer> row) {
+		boolean exists = false;
+		if(NEED_SUPPLEMANTARY_NUMBER) {
+			for(int number : row) {
+				if(number > 0 && number <= MAX_SUPPLEMTARY_NUMBER) {
+					exists = true;
+					break;
+				}
+			}
+		}
+		return exists;
 	}
 }
