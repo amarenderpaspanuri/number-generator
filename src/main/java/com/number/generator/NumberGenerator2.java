@@ -12,6 +12,7 @@ import com.number.generator.util.RowNumbers;
 import static com.number.generator.constants.NumberConstants2.ROWS_REQUIRED;
 import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS_PER_ROW;
 import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS;
+import static com.number.generator.constants.NumberConstants2.AVERAGE_FACTOR;
 
 public class NumberGenerator2 {
 
@@ -35,9 +36,13 @@ public class NumberGenerator2 {
 				Random random = new Random();
 				if(ROWS_REQUIRED != 0) {
 					for(int i = 0; i < ROWS_REQUIRED; i++) {
-						int randomIndex = random.nextInt(rows.size());
-						System.out.println(rows.get(randomIndex));
-						rows.remove(randomIndex);
+						if(rows.size() == 0) {
+							i = i-1;
+						} else {
+							int randomIndex = random.nextInt(rows.size());
+							System.out.println(rows.get(randomIndex));
+							rows.remove(randomIndex);
+						}
 					}
 				} else {
 					for(ArrayList<Integer> row : rows) {
@@ -67,7 +72,7 @@ public class NumberGenerator2 {
 		int totalNumbers = rowCount * MAX_NUMBERS_PER_ROW;
 		int average = Math.round((totalNumbers / MAX_NUMBERS) - (MAX_NUMBERS_PER_ROW / 2));
 		for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
-			if((entry.getValue() < average) || (entry.getValue() > average * 1.7)) {
+			if((entry.getValue() < average) || (entry.getValue() > average * AVERAGE_FACTOR)) {
 				return false;
 			}
 		}

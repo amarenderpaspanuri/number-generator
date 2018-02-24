@@ -154,15 +154,14 @@ public final class RowNumbers {
 	}
 	
 	private static boolean supplemantaryNumberExists(List<Integer> row) {
-		boolean exists = false;
 		if(NEED_SUPPLEMANTARY_NUMBER) {
 			for(int number : row) {
 				if(number > 0 && number <= MAX_SUPPLEMTARY_NUMBER) {
-					exists = true;
-					break;
+					return true;
 				}
 			}
+			return false;
 		}
-		return exists;
+		return true;
 	}
 }
