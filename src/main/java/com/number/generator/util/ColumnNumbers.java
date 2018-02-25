@@ -1,11 +1,11 @@
 package com.number.generator.util;
 
 import static com.number.generator.constants.NumberConstants2.DUPLICATES_ALLOWED;
-import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS_PER_ROW;
-import static com.number.generator.constants.NumberConstants2.MAX_ROWS;
+import static com.number.generator.constants.NumberConstants2.NUMBERS_PER_LINE;
+import static com.number.generator.constants.NumberConstants2.NUMBER_OF_REPETITIONS;
 import static com.number.generator.constants.NumberConstants2.MAX_SUPPLEMTARY_NUMBER;
 import static com.number.generator.constants.NumberConstants2.NEED_SUPPLEMANTARY_NUMBER;
-import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS;
+import static com.number.generator.constants.NumberConstants2.NUMBER_LIMIT;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,35 +15,35 @@ import java.util.Random;
 
 public final class ColumnNumbers {
 
-	public static List<ArrayList<Integer>> rows;
+	public static List<ArrayList<Integer>> totalLines;
 
 	public static void main(String[] args) {
-		rows = new ArrayList<ArrayList<Integer>>();
+		totalLines = new ArrayList<ArrayList<Integer>>();
 		generate_column_numbers();
 	}
 
 	public static void generate_column_numbers() {
-		int maxColumns = MAX_NUMBERS;
+		int maxColumns = NUMBER_LIMIT;
 
 		int rowCount = 1;
 		while (rowCount <= maxColumns) {
-			int columnCount = MAX_NUMBERS / rowCount;
-			int extraRowCount = MAX_NUMBERS - (columnCount * rowCount);
+			int columnCount = NUMBER_LIMIT / rowCount;
+			int extraRowCount = NUMBER_LIMIT - (columnCount * rowCount);
 			int[][] numbers = new int[rowCount][columnCount + extraRowCount];
 			int count = 1;
 			for (int i = 0; i < rowCount; i++) {
 				for (int j = 0; j < columnCount; j++) {
-					if (count <= MAX_NUMBERS) {
+					if (count <= NUMBER_LIMIT) {
 						numbers[i][j] = count;
 						count++;
 					}
 				}
 			}
 			if(extraRowCount > 0) {
-				//Random random = new Random();
+				Random random = new Random();
 				count = columnCount * rowCount;
-				while (count < MAX_NUMBERS) {
-					Random random = new Random();
+				while (count < NUMBER_LIMIT) {
+					//Random random = new Random();
 					int[] row = numbers[random.nextInt(numbers.length)];
 					int index = random.nextInt(row.length - columnCount) + columnCount;
 					int number = row[index];
@@ -69,13 +69,13 @@ public final class ColumnNumbers {
 
 	public static void generate_single_row_numbers(final int[][] numbers) {
 		int rowCount = 1;
-		while (rowCount <= MAX_ROWS) {
+		while (rowCount <= NUMBER_OF_REPETITIONS) {
 			final List<Integer> row = new ArrayList<Integer>();
-			//Random random = new Random();
+			Random random = new Random();
 			int count = 1;
-			while (count <= MAX_NUMBERS_PER_ROW) {
+			while (count <= NUMBERS_PER_LINE) {
 				int rowIndex = 0;
-				Random random = new Random();
+				//Random random = new Random();
 				int columnIndex = random.nextInt(numbers[rowIndex].length);
 				int number = numbers[rowIndex][columnIndex];
 				while (number == 0) {
@@ -98,7 +98,7 @@ public final class ColumnNumbers {
 
 	public static void generate_multi_row_numbers(final int[][] numbers) {
 		int rowCount = 1;
-		while (rowCount <= MAX_ROWS) {
+		while (rowCount <= NUMBER_OF_REPETITIONS) {
 			final List<ArrayList<Integer>> outerList = new ArrayList<ArrayList<Integer>>();
 			ArrayList<Integer> extraList = new ArrayList<Integer>();
 			for (int columnIndex = 0; columnIndex < numbers[0].length; columnIndex++) {
@@ -122,17 +122,17 @@ public final class ColumnNumbers {
 				}
 			}
 
-			//Random random = new Random();
+			Random random = new Random();
 
 			for(int number : extraList) {
-				Random random = new Random();
+				//Random random = new Random();
 				outerList.get(random.nextInt(outerList.size())).add(number);
 			}
 
 			final List<Integer> row = new ArrayList<Integer>();
 			int count = 1;
-			while (count <= MAX_NUMBERS_PER_ROW) {
-				Random random = new Random();
+			while (count <= NUMBERS_PER_LINE) {
+				//Random random = new Random();
 				int randomOuterIndex = random.nextInt(outerList.size());
 				int randomInnerIndex = random.nextInt(outerList.get(randomOuterIndex).size());
 
@@ -160,10 +160,10 @@ public final class ColumnNumbers {
 			return false;
 		}
 		boolean exists = true;
-		if (rows.isEmpty()) {
+		if (totalLines.isEmpty()) {
 			exists = false;
 		} else {
-			for (ArrayList<Integer> existingList : rows) {
+			for (ArrayList<Integer> existingList : totalLines) {
 				exists = rowEqualsRow(existingList, row);
 				if (!exists) {
 					break;
@@ -172,7 +172,7 @@ public final class ColumnNumbers {
 		}
 		if (!exists) {
 			Collections.sort(row);
-			rows.add((ArrayList<Integer>) row);
+			totalLines.add((ArrayList<Integer>) row);
 		}
 		return exists;
 	}

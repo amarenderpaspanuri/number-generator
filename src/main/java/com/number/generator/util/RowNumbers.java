@@ -1,11 +1,11 @@
 package com.number.generator.util;
 
 import static com.number.generator.constants.NumberConstants2.DUPLICATES_ALLOWED;
-import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS_PER_ROW;
-import static com.number.generator.constants.NumberConstants2.MAX_ROWS;
-import static com.number.generator.constants.NumberConstants2.MAX_NUMBERS;
-import static com.number.generator.constants.NumberConstants2.NEED_SUPPLEMANTARY_NUMBER;
 import static com.number.generator.constants.NumberConstants2.MAX_SUPPLEMTARY_NUMBER;
+import static com.number.generator.constants.NumberConstants2.NEED_SUPPLEMANTARY_NUMBER;
+import static com.number.generator.constants.NumberConstants2.NUMBERS_PER_LINE;
+import static com.number.generator.constants.NumberConstants2.NUMBER_LIMIT;
+import static com.number.generator.constants.NumberConstants2.NUMBER_OF_REPETITIONS;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,35 +15,35 @@ import java.util.Random;
 
 public final class RowNumbers {
 
-	public static List<ArrayList<Integer>> rows;
+	public static List<ArrayList<Integer>> totalLines;
 
 	public static void main(String[] args) {
-		rows = new ArrayList<ArrayList<Integer>>();
+		totalLines = new ArrayList<ArrayList<Integer>>();
 		generate_row_numbers();
 	}
 
 	public static void generate_row_numbers() {
-		int maxColumns = MAX_NUMBERS;
+		int maxColumns = NUMBER_LIMIT;
 
 		int columnCount = 1;
 		while (columnCount <= maxColumns) {
-			int rowCount = MAX_NUMBERS / columnCount;
-			int extraColumnCount = MAX_NUMBERS - (rowCount * columnCount);
+			int rowCount = NUMBER_LIMIT / columnCount;
+			int extraColumnCount = NUMBER_LIMIT - (rowCount * columnCount);
 			int[][] numbers = new int[rowCount][columnCount + extraColumnCount];
 			int count = 1;
 			for (int i = 0; i < rowCount; i++) {
 				for (int j = 0; j < columnCount; j++) {
-					if (count <= MAX_NUMBERS) {
+					if (count <= NUMBER_LIMIT) {
 						numbers[i][j] = count;
 						count++;
 					}
 				}
 			}
 			if(extraColumnCount > 0) {
-				//Random random = new Random();
+				Random random = new Random();
 				count = rowCount * columnCount;
-				while (count < MAX_NUMBERS) {
-					Random random = new Random();
+				while (count < NUMBER_LIMIT) {
+					//Random random = new Random();
 					int[] row = numbers[random.nextInt(numbers.length)];
 					int index = random.nextInt(row.length - columnCount) + columnCount;
 					int number = row[index];
@@ -69,12 +69,12 @@ public final class RowNumbers {
 
 	public static void generate_single_column_numbers(final int[][] numbers) {
 		int rowCount = 1;
-		while (rowCount <= MAX_ROWS) {
+		while (rowCount <= NUMBER_OF_REPETITIONS) {
 			final List<Integer> row = new ArrayList<Integer>();
-			//Random random = new Random();
+			Random random = new Random();
 			int count = 1;
-			while (count <= MAX_NUMBERS_PER_ROW) {
-				Random random = new Random();
+			while (count <= NUMBERS_PER_LINE) {
+				//Random random = new Random();
 				int rowIndex = random.nextInt(numbers.length);
 				int columnIndex = 0;
 				int number = numbers[rowIndex][columnIndex];
@@ -98,12 +98,12 @@ public final class RowNumbers {
 
 	public static void generate_multi_column_numbers(final int[][] numbers) {
 		int rowCount = 1;
-		while (rowCount <= MAX_ROWS) {
+		while (rowCount <= NUMBER_OF_REPETITIONS) {
 			final List<Integer> row = new ArrayList<Integer>();
-			//Random random = new Random();
+			Random random = new Random();
 			int count = 1;
-			while (count <= MAX_NUMBERS_PER_ROW) {
-				Random random = new Random();
+			while (count <= NUMBERS_PER_LINE) {
+				//Random random = new Random();
 				int rowIndex = random.nextInt(numbers.length);
 				int columnIndex = random.nextInt(numbers[rowIndex].length);
 
@@ -131,10 +131,10 @@ public final class RowNumbers {
 			return false;
 		}
 		boolean exists = true;
-		if (rows.isEmpty()) {
+		if (totalLines.isEmpty()) {
 			exists = false;
 		} else {
-			for (ArrayList<Integer> existingList : rows) {
+			for (ArrayList<Integer> existingList : totalLines) {
 				exists = rowEqualsRow(existingList, row);
 				if (!exists) {
 					break;
@@ -144,7 +144,7 @@ public final class RowNumbers {
 		
 		if (!exists) {
 			Collections.sort(row);
-			rows.add((ArrayList<Integer>) row);
+			totalLines.add((ArrayList<Integer>) row);
 		}
 		return exists;
 	}
