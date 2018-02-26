@@ -2,9 +2,9 @@ package com.number.generator.constants;
 
 public class NumberConstants2 {
 
-	public static final int NUMBER_LIMIT = 40;
+	public static final int NUMBER_LIMIT = 45;
 	
-	public static final int NUMBERS_PER_LINE = 6;
+	public static final int NUMBERS_PER_LINE = 7;
 	
 	public static final int LINES_REQUIRED = 0;
 	
@@ -20,5 +20,5 @@ public class NumberConstants2 {
 	
 	public static final float MAX_NUMBER_OCCURANCE_FACTOR = 1.6f;
 	
-	public static final double RULES_FACTOR = 0.8;
+	public static final double RULES_FACTOR = 1.3;
 }
