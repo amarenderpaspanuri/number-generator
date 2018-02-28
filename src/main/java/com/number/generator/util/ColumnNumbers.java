@@ -1,20 +1,17 @@
 package com.number.generator.util;
 
-import static com.number.generator.constants.NumberConstants2.DUPLICATES_ALLOWED;
-import static com.number.generator.constants.NumberConstants2.NUMBERS_PER_LINE;
-import static com.number.generator.constants.NumberConstants2.NUMBER_OF_REPETITIONS;
-import static com.number.generator.constants.NumberConstants2.MAX_SUPPLEMTARY_NUMBER;
-import static com.number.generator.constants.NumberConstants2.NEED_SUPPLEMANTARY_NUMBER;
-import static com.number.generator.constants.NumberConstants2.NUMBER_LIMIT;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import com.number.generator.type.PlayType;
+
 public final class ColumnNumbers {
 
+	public static PlayType playType;
+	
 	public static List<ArrayList<Integer>> totalLines;
 
 	public static void main(String[] args) {
@@ -23,17 +20,17 @@ public final class ColumnNumbers {
 	}
 
 	public static void generate_column_numbers() {
-		int maxColumns = NUMBER_LIMIT;
+		int maxColumns = playType.getNumberLimit();
 
 		int rowCount = 1;
 		while (rowCount <= maxColumns) {
-			int columnCount = NUMBER_LIMIT / rowCount;
-			int extraRowCount = NUMBER_LIMIT - (columnCount * rowCount);
+			int columnCount = playType.getNumberLimit() / rowCount;
+			int extraRowCount = playType.getNumberLimit() - (columnCount * rowCount);
 			int[][] numbers = new int[rowCount][columnCount + extraRowCount];
 			int count = 1;
 			for (int i = 0; i < rowCount; i++) {
 				for (int j = 0; j < columnCount; j++) {
-					if (count <= NUMBER_LIMIT) {
+					if (count <= playType.getNumberLimit()) {
 						numbers[i][j] = count;
 						count++;
 					}
@@ -42,7 +39,7 @@ public final class ColumnNumbers {
 			if(extraRowCount > 0) {
 				Random random = new Random();
 				count = columnCount * rowCount;
-				while (count < NUMBER_LIMIT) {
+				while (count < playType.getNumberLimit()) {
 					//Random random = new Random();
 					int[] row = numbers[random.nextInt(numbers.length)];
 					int index = random.nextInt(row.length - columnCount) + columnCount;
@@ -69,11 +66,11 @@ public final class ColumnNumbers {
 
 	public static void generate_single_row_numbers(final int[][] numbers) {
 		int rowCount = 1;
-		while (rowCount <= NUMBER_OF_REPETITIONS) {
+		while (rowCount <= playType.getRepetitions()) {
 			final List<Integer> row = new ArrayList<Integer>();
 			Random random = new Random();
 			int count = 1;
-			while (count <= NUMBERS_PER_LINE) {
+			while (count <= playType.getNumbersPerLine()) {
 				int rowIndex = 0;
 				//Random random = new Random();
 				int columnIndex = random.nextInt(numbers[rowIndex].length);
@@ -83,7 +80,7 @@ public final class ColumnNumbers {
 					columnIndex = random.nextInt(numbers[rowIndex].length);
 					number = numbers[rowIndex][columnIndex];
 				}
-				if (DUPLICATES_ALLOWED) {
+				if (playType.isDuplicatesAllowed()) {
 					row.add(number);
 					count++;
 				} else if (!row.contains(number)) {
@@ -98,7 +95,7 @@ public final class ColumnNumbers {
 
 	public static void generate_multi_row_numbers(final int[][] numbers) {
 		int rowCount = 1;
-		while (rowCount <= NUMBER_OF_REPETITIONS) {
+		while (rowCount <= playType.getRepetitions()) {
 			final List<ArrayList<Integer>> outerList = new ArrayList<ArrayList<Integer>>();
 			ArrayList<Integer> extraList = new ArrayList<Integer>();
 			for (int columnIndex = 0; columnIndex < numbers[0].length; columnIndex++) {
@@ -131,7 +128,7 @@ public final class ColumnNumbers {
 
 			final List<Integer> row = new ArrayList<Integer>();
 			int count = 1;
-			while (count <= NUMBERS_PER_LINE) {
+			while (count <= playType.getNumbersPerLine()) {
 				//Random random = new Random();
 				int randomOuterIndex = random.nextInt(outerList.size());
 				int randomInnerIndex = random.nextInt(outerList.get(randomOuterIndex).size());
@@ -142,7 +139,7 @@ public final class ColumnNumbers {
 					randomInnerIndex = random.nextInt(outerList.get(randomOuterIndex).size());
 					number = outerList.get(randomOuterIndex).get(randomInnerIndex);
 				}
-				if (DUPLICATES_ALLOWED) {
+				if (playType.isDuplicatesAllowed()) {
 					row.add(number);
 					count++;
 				} else if (!row.contains(number)) {
@@ -182,9 +179,9 @@ public final class ColumnNumbers {
 	}
 	
 	private static boolean supplemantaryNumberExists(List<Integer> row) {
-		if(NEED_SUPPLEMANTARY_NUMBER) {
+		if(playType.isSupplemantaryRequired()) {
 			for(int number : row) {
-				if(number > 0 && number <= MAX_SUPPLEMTARY_NUMBER) {
+				if(number > 0 && number <= playType.getSupplementaryNumberLimit()) {
 					return true;
 				}
 			}

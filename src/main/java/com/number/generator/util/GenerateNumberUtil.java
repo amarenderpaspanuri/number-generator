@@ -1,19 +1,21 @@
 package com.number.generator.util;
 
-import static com.number.generator.constants.NumberConstants2.LINES_REQUIRED;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import com.number.generator.type.PlayType;
+
 public final class GenerateNumberUtil {
 
+	public static PlayType playType;
+	
 	public static List<ArrayList<Integer>> getLinesRequired(List<ArrayList<Integer>> lines) {
 		Random random = new Random();
-		if(LINES_REQUIRED != 0) {
+		if(playType.getRequiredLines() != 0) {
 			List<ArrayList<Integer>> requiredLines = new ArrayList<ArrayList<Integer>>(); 
-			for(int i = 0; i < LINES_REQUIRED; i++) {
+			for(int i = 0; i < playType.getRequiredLines(); i++) {
 				if(lines.isEmpty()) {
 					i = i-1;
 				} else {

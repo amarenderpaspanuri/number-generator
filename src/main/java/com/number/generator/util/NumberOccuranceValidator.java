@@ -1,17 +1,16 @@
 package com.number.generator.util;
 
-import static com.number.generator.constants.NumberConstants2.MAX_NUMBER_OCCURANCE_FACTOR;
-import static com.number.generator.constants.NumberConstants2.NUMBERS_PER_LINE;
-import static com.number.generator.constants.NumberConstants2.NUMBER_LIMIT;
-import static com.number.generator.constants.NumberConstants2.MIN_NUMBER_OCCURANCE_FACTOR;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.number.generator.type.PlayType;
+
 public final class NumberOccuranceValidator {
 
+	public static PlayType playType;
+	
 	public static boolean validateOccurances(List<ArrayList<Integer>> lines, HashMap<Integer, Integer> map) {
 		int rowCount = lines.size();
 		
@@ -19,13 +18,13 @@ public final class NumberOccuranceValidator {
 			countNumberOccurances(row, map);
 		}
 		
-		int totalNumbers = rowCount * NUMBERS_PER_LINE;
-		int average = Math.round(totalNumbers / NUMBER_LIMIT);
+		int totalNumbers = rowCount * playType.getNumbersPerLine();
+		int average = Math.round(totalNumbers / playType.getNumberLimit());
 		//int minFrequency = Math.round(average - (NUMBERS_PER_LINE / 2));
-		int minFrequency = Math.round(average * MIN_NUMBER_OCCURANCE_FACTOR);
-		int maxFrequency = Math.round(average * MAX_NUMBER_OCCURANCE_FACTOR);
+		int minFrequency = Math.round(average * playType.getMinNumberOccuranceFactor());
+		int maxFrequency = Math.round(average * playType.getMaxNumberOccuranceFactor());
 		for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
-			if((entry.getValue() <= minFrequency) || (entry.getValue() >= maxFrequency)) {
+			if((entry.getValue() <= minFrequency) || (entry.getValue() > maxFrequency)) {
 				return false;
 			}
 		}
