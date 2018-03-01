@@ -21,7 +21,7 @@ public class NumberGenerator2 {
 
 	public static void main(String[] args) {
 		int count = 1;
-		PlayType playType = PlayType.OZ; 
+		PlayType playType = PlayType.PB;
 		
 		RulesValidator.playType = playType;
 		GenerateNumberUtil.playType = playType;
@@ -47,9 +47,12 @@ public class NumberGenerator2 {
 			boolean isFrequencyValid = validateOccurances(requiredLines, numberStatsMap);	
 			if(isFrequencyValid) {
 				boolean isRulesValid = validateRules(rules, totalLines);
-				System.out.print(count++ + " ");
+				System.out.print(". ");
+				count++;
 				if(isRulesValid) {
+					System.out.println();
 					generateLines(totalLineCount, requiredLines, numberStatsMap);
+					System.out.println("Number of attempts: " + count);
 					break;
 				}
 			}
