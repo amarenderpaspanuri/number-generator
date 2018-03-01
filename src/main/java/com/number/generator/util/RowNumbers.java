@@ -118,8 +118,9 @@ public final class RowNumbers {
 					count++;
 				}
 			}
-			check_if_row_existz(row);
-			rowCount++;
+			if(!check_if_row_existz(row)) {
+				rowCount++;
+			}
 		}
 	}
 
