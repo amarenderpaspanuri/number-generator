@@ -12,10 +12,10 @@ public final class RowNumbers {
 
 	public static PlayType playType;
 	
-	public static List<ArrayList<Integer>> totalLines;
+	public static List<ArrayList<Integer>> rawLines;
 
 	public static void main(String[] args) {
-		totalLines = new ArrayList<ArrayList<Integer>>();
+		rawLines = new ArrayList<ArrayList<Integer>>();
 		generate_row_numbers();
 	}
 
@@ -129,10 +129,10 @@ public final class RowNumbers {
 			return false;
 		}
 		boolean exists = true;
-		if (totalLines.isEmpty()) {
+		if (rawLines.isEmpty()) {
 			exists = false;
 		} else {
-			for (ArrayList<Integer> existingList : totalLines) {
+			for (ArrayList<Integer> existingList : rawLines) {
 				exists = rowEqualsRow(existingList, row);
 				if (!exists) {
 					break;
@@ -142,7 +142,7 @@ public final class RowNumbers {
 		
 		if (!exists) {
 			Collections.sort(row);
-			totalLines.add((ArrayList<Integer>) row);
+			rawLines.add((ArrayList<Integer>) row);
 		}
 		return exists;
 	}
