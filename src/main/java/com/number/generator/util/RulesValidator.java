@@ -742,10 +742,10 @@ public final class RulesValidator {
 	public static List<ArrayList<Integer>> loadRules() {
 		List<ArrayList<Integer>> rulesList = new ArrayList<ArrayList<Integer>>();
 		String[] rules = decideRules().split(",", -1);
-		for(String pair : rules) {
-			if(!pair.trim().isEmpty()) {
-				String[] numberArray = pair.split("-", -1);
-				ArrayList<Integer> rule = new ArrayList<Integer>();
+		for(String rule : rules) {
+			if(!rule.trim().isEmpty()) {
+				String[] numberArray = rule.split("-", -1);
+				ArrayList<Integer> ruleList = new ArrayList<Integer>();
 				boolean flag = true;
 				for(String str : numberArray) {
 					Integer number = Integer.valueOf(str);
@@ -753,11 +753,11 @@ public final class RulesValidator {
 						flag = false;
 						break;
 					} else {
-						rule.add(number);
+						ruleList.add(number);
 					}
 				}
-				if(flag && !rule.isEmpty() && !ruleListContainsRule(rulesList, rule)) {
-					rulesList.add(rule);
+				if(flag && !ruleList.isEmpty() && !ruleListContainsRule(rulesList, ruleList)) {
+					rulesList.add(ruleList);
 				}
 			}
 		}
@@ -786,25 +786,38 @@ public final class RulesValidator {
 		return rules;
 	}
 	
-	public static boolean validateRules(List<ArrayList<Integer>> rules, List<ArrayList<Integer>> lines) {
-		float ruleCount = 0;
-		
-		for(ArrayList<Integer> rule : rules) {
-			for(ArrayList<Integer> line : lines) {
+	public static boolean validateRules(List<ArrayList<Integer>> rules, List<ArrayList<Integer>> lines, List<ArrayList<Integer>> validLines) {
+		for(int j = 0; j < lines.size(); j++){
+			float passedRuleCount = 0;
+			ArrayList<Integer> line = lines.get(j);
+			for(int i = 0; i < rules.size(); i++){
+				ArrayList<Integer> rule = rules.get(i);
 				if(lineContainsRule(line, rule)) {
-					ruleCount++;
+					passedRuleCount++;
 				}
 			}
+			if(validLine(rules.size(), passedRuleCount)) {
+				validLines.add(line);
+				if(validLines.size() == playType.getRequiredLines()) {
+					return true;
+				}
+			} else {
+				lines.remove(j);
+				j--;
+			}
 		}
-		
-		float ruleSize = rules.size();
-		float ruleFactor = ruleCount/ruleSize;
-		if(ruleFactor >= playType.getRulesFactor()) {
-			return true;
-		}
-		
 		return false;
 	}
+
+	public static boolean validLine(final float totalRuleSize, final float passedRuleCount) {
+		float ruleFactor = passedRuleCount/totalRuleSize;
+		float rulePercentage = (passedRuleCount * 100)/totalRuleSize;
+		if(rulePercentage >= playType.getRulesFactor()) {
+			return true;
+		}
+		return false;
+	}
+
 	public static boolean ruleListContainsRule(List<ArrayList<Integer>> rulesList, List<Integer> rule) {
 		for(ArrayList<Integer> list : rulesList) {
 			if(listEqualsList(list, rule)) {
