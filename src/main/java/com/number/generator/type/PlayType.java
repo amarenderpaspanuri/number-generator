@@ -2,11 +2,11 @@ package com.number.generator.type;
 
 public enum PlayType {
     OZ("oz",   45, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
-    PB("pb",   40, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 20, true,  false, 0.7f, 1.6f, 1.1),
+    PB("pb",   40, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 20, true,  false, 0.7f, 1.6f, 1.0),
     SL("sl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
     ML("ml",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
     WL("wl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
-    SFL("sfl", 37, 8, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3);
+    SFL("sfl", 37, 8, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 10);
     
 	private String value;
 	private int numberLimit;
@@ -37,8 +37,8 @@ public enum PlayType {
     }
     
     private static class Constants {
-        public static final int LINES_REQUIRED = 0;
-        public static final int NUMBER_OF_REPETITIONS = 1;
+        public static final int LINES_REQUIRED = 25;
+        public static final int NUMBER_OF_REPETITIONS = 3;
     }
 
 	public String getValue() {
