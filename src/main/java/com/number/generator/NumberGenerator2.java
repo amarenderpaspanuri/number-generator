@@ -5,6 +5,7 @@ import static com.number.generator.util.NumberOccuranceValidator.validateOccuran
 import static com.number.generator.util.RulesValidator.getRuleOccurances;
 import static com.number.generator.util.RulesValidator.loadRules;
 import static com.number.generator.util.RulesValidator.validateRules;
+import static com.number.generator.util.GenerateNumberUtil.getLinesRequired;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +55,7 @@ public class NumberGenerator2 {
 				isOccuranceValid = true;
 				rawLines = getTestLines();
 			} else {
+				rawLines = getLinesRequired(rawLines);
 				isOccuranceValid = validateOccurances(rawLines, numbersMap);
 			}
 			
