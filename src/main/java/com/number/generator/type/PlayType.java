@@ -1,12 +1,12 @@
 package com.number.generator.type;
 
 public enum PlayType {
-    OZ("oz",   45, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
-    PB("pb",   40, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 20, true,  false, 0.7f, 1.6f, 1.0),
-    SL("sl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
-    ML("ml",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
-    WL("wl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 1.3),
-    SFL("sfl", 37, 8, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.6f, 10);
+    OZ("oz",   45, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 4),
+    PB("pb",   40, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 20, true,  false, 0.7f, 1.4f, 3, 5, 3, 4),
+    SL("sl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4),
+    ML("ml",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4),
+    WL("wl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4),
+    SFL("sfl", 37, 8, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 4);
     
 	private String value;
 	private int numberLimit;
@@ -16,13 +16,21 @@ public enum PlayType {
 	private int supplementaryNumberLimit;
 	private boolean supplemantaryRequired;
 	private boolean duplicatesAllowed;
+	
 	private float minNumberOccuranceFactor;
 	private float maxNumberOccuranceFactor;
-	private double rulesFactor;
+	
+	private int minSingleRuleCount;
+	private int maxSingleRuleCount;
+	
+	private int minMultiRuleCount;
+	private int maxMultiRuleCount;
 	
     PlayType(String value, int numberLimit, int numbersPerLine, int requiredLines, int repetitions,
     		int supplementaryNumberLimit, boolean supplemantaryRequired, boolean duplicatesAllowed, 
-    		float minNumberOccuranceFactor, float maxNumberOccuranceFactor, double rulesFactor) {
+    		float minNumberOccuranceFactor, float maxNumberOccuranceFactor, 
+    		int minSingleRuleCount, int maxSingleRuleCount,
+    		int minMultiRuleCount, int maxMultiRuleCount) {
     	this.value = value;
     	this.numberLimit = numberLimit;
     	this.numbersPerLine = numbersPerLine;
@@ -33,12 +41,15 @@ public enum PlayType {
     	this.duplicatesAllowed = duplicatesAllowed;
     	this.minNumberOccuranceFactor = minNumberOccuranceFactor;
     	this.maxNumberOccuranceFactor = maxNumberOccuranceFactor;
-    	this.rulesFactor = rulesFactor;
+    	this.minSingleRuleCount = minSingleRuleCount;
+    	this.maxSingleRuleCount = maxSingleRuleCount;
+    	this.minMultiRuleCount = minMultiRuleCount;
+    	this.maxMultiRuleCount = maxMultiRuleCount;
     }
     
-    private static class Constants {
-        public static final int LINES_REQUIRED = 25;
-        public static final int NUMBER_OF_REPETITIONS = 3;
+    public static class Constants {
+        public static final int LINES_REQUIRED = 50;
+        public static final int NUMBER_OF_REPETITIONS = 1;
     }
 
 	public String getValue() {
@@ -121,11 +132,35 @@ public enum PlayType {
 		this.maxNumberOccuranceFactor = maxNumberOccuranceFactor;
 	}
 
-	public double getRulesFactor() {
-		return rulesFactor;
+	public int getMinSingleRuleCount() {
+		return minSingleRuleCount;
 	}
 
-	public void setRulesFactor(double rulesFactor) {
-		this.rulesFactor = rulesFactor;
+	public void setMinSingleRuleCount(int minSingleRuleCount) {
+		this.minSingleRuleCount = minSingleRuleCount;
+	}
+
+	public int getMaxSingleRuleCount() {
+		return maxSingleRuleCount;
+	}
+
+	public void setMaxSingleRuleCount(int maxSingleRuleCount) {
+		this.maxSingleRuleCount = maxSingleRuleCount;
+	}
+
+	public int getMinMultiRuleCount() {
+		return minMultiRuleCount;
+	}
+
+	public void setMinMultiRuleCount(int minMultiRuleCount) {
+		this.minMultiRuleCount = minMultiRuleCount;
+	}
+
+	public int getMaxMultiRuleCount() {
+		return maxMultiRuleCount;
+	}
+
+	public void setMaxMultiRuleCount(int maxMultiRuleCount) {
+		this.maxMultiRuleCount = maxMultiRuleCount;
 	}
 }

@@ -1,6 +1,7 @@
 package com.number.generator.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -10,7 +11,12 @@ public final class RulesValidator {
 	
 	public static PlayType playType;
 	
-	static String doubleRules = "1-10," +
+	public static List<Integer> singleRules;
+	public static List<ArrayList<Integer>> multiRules;
+	
+	static String singleRule = "2-4-5-7-8-9-11-14-15-19-21-23-25-26-27-28-29-31-32-33-35-37-38-43-45" + "";
+	
+	static String multiRule = "1-10," +
 								"1-19," +
 								"1-28," +
 								"1-36," +
@@ -21,7 +27,6 @@ public final class RulesValidator {
 								"2-29," +
 								"2-35," +
 								
-								"3-6," +
 								"3-21," +
 								
 								"4-7," +
@@ -31,47 +36,45 @@ public final class RulesValidator {
 								"4-31," +
 								"4-33," +
 								
-								"5-9," +
+								"5-7," +
 								"5-10," +
-								"5-15," +
+								"5-15," + //**
 								"5-23," +
 								"5-32," +
 								
 								"6-33," +
+								"6-28," +
 								"6-31," +
-								"6-35," +
 								
 								"7-16," +
 								"7-25," +
 								"7-27," +
 								"7-34," +
 								
+								"8-15," + //**
+								"8-16," +
 								"8-17," +
-								"8-11," +
-								"8-15," +
-								"8-21," +
+								"8-11," + //**
+								"8-21," + //**
 								"8-26," +
 								"8-35," +
 								
+								"9-11," +
 								"9-18," +
 								"9-19," +
 								"9-27," +
 								"9-29," +
 								
-								"10-5," +
 								"10-15," +
 								"10-30," +
 								"10-19," +
 								"10-28," +
 								"10-37," +
 								
-								"11-2," +
-								"11-8," +
 								"11-29," +
 								"11-22," +
 								"11-33," +
 								
-								"12-4," +
 								"12-6," +
 								"12-18," +
 								"12-24," +
@@ -80,505 +83,80 @@ public final class RulesValidator {
 								"13-4," +
 								"13-10," +
 								"13-22," +
+								"13-26," +
 								"13-31," +
-																	
+											
+								"14-5," +
 								"14-17," +
-								"14-15," +
 								"14-34," +
 								
-								"15-5," +
-								"15-10," +
 								"15-18," +
 								"15-30," +
 								
 								"16-7," +
+								"16-18," +
 								"16-19," +
 								"16-25," +
 								"16-34," +
 								
-								"17-5," +
-								"17-14," +
-								"17-34," +
+								"17-26," +
 								"17-35," +
 								
-								"18-3," +
-								"18-9," +
-								"18-15," +
 								"18-36," +
 								
-								"19-1," +
-								"19-9," +
-								"19-10," +
-								"19-16," +
 								"19-28," +
+								"19-29," +
 								"19-37," +
 								
-								"20-8," +
-								"20-30," +
-								
-								"21-3," +
-								
+								"22-2," +
 								"22-4," +
 								"22-11," +
 								"22-13," +
+								"22-24," +
 								"22-31," +
 								"22-33," +
 								
-								"23-33," +
 								"23-5," +
 								"23-14," +
 								"23-32," +
 								"23-35," +
 								
 								"24-6," +
-								"24-12," +
-								"24-22," +
-					
+								"24-27," +
+								
 								"25-7," +
+								"25-12," +
 								"25-16," +
 								"25-27," +
 								
-								"26-8," +
-								"26-13," +
-								"26-17," +
 								"26-35," +
-								
+																
 								"27-9," +
 								"27-30," +
 								"27-4," +
 								"27-7," +
 								
 								"28-31," +
-								"28-6," +
-								"28-10," +
-								"28-12," +
-								"28-1," +
-								"28-19," +
 								
-								"29-2," +
-								"29-11," +
-								"29-9," +
-								"29-19," +
-								"29-28," +
-								
-								"30-15," +
-								"30-27," +
-								"30-10," +
 								"30-5," +
-								"30-25," +
 								
-								"31-6," +
-								"31-28," +
-								"31-4," +
-								"31-22," +
 								"31-12," +
-								"31-13," +
 								
-								"32-5," +
 								"32-14," +
-								"32-23," +
 								"32-25," +
-								"32-35," +
 								
-								"33-3," +
-								"33-4," +
-								"33-6," +
 								"33-7," +
-								"33-11," +
-								"33-22," +
 								"33-36," +
 								
-								"34-2," +
-								"34-14," +
-								"34-16," +
-								"34-17," +
-								"34-3," +
-								"34-35," +
-								
-								"35-2," +
-								"35-8," +
-								"35-17," +
-								"35-23," +
 								"35-32," +
 								"35-6," +
-								"35-4," +
 								
-								"36-1," +
-								"36-4," +
 								"36-7," +
 								"36-9," +
-								"36-18," +
-								"36-33," +
+								
 								"";
 	
-	static String tripleRules = "1-10-19," +
-								"1-10-28," +
-								"1-10-37," +
-								
-								"2-11-29," +
-								"2-11-35," +
-								"2-22-33," +
-								
-								"4-13-22," +
-								"4-13-31," +
-								"4-13-31," +
-								"4-13-22," +
-								"4-7-33," +
-								"4-7-33," +
-								"4-7-6-33," +
-								
-								"5-10-23," +
-								"5-15-23," +
-								
-								"6-33-31," +
-								"6-16-35," +
-								
-								"7-4-16," +
-								"7-4-16," +
-								"7-4-27," +
-								"7-4-34," +
-								
-								"8-2-35," +
-								"8-26-35," +
-								"8-13-35," +
-								"8-17-35," +
-								
-								"9-1-19," +
-								"9-19-29," +
-								"9-19-27," +
-								"9-19-36," +
-								"9-19-31," +
-								"9-19-28," +
-								
-								"10-5-30," +
-								"10-1-19," +
-								"10-15-30," +
-								"10-1-19," +
-								"10-1-37," +
-								"10-19-28," +
-								"10-19-37," +
-								"10-13-28," +
-								
-								"11-2-29," +
-								"11-22-33," +
-								"11-4-22," +
-								"11-8-2," +
-								"11-14-23," +
-								
-								"12-4-31," +
-								"12-4-28," +
-								"12-6-24," +
-								"12-18-36," +
-								
-								"13-4-22," +
-								"13-4-31," +
-								"13-4-26," +
-								
-								"14-17-34," +
-								
-								"15-5-31," +
-								"15-5-18," +
-								"15-18-10," +
-								
-								"16-19-18," +
-								
-								"17-5-14," +
-								"17-5-8," +
-								"17-5-34," +
-								"17-5-26," +
-								"17-26-35," +
-								
-								"18-55-36," +
-								
-								"19-10-1," +
-								
-								"21-3-4," +
-								
-								"22-4-24," +
-								"22-4-11," +
-								"22-13-11," +
-								
-								"23-5-32," +
-								"23-5-27," +
-								"23-5-25," +
-								
-								"26-13-8," +
-								"26-17-8," +
-								"26-35-8," +
-								
-								"27-25-4," +
-								"27-25-7," +
-								"27-25-30," +
-								
-								"28-31-6," +
-								"28-1-10," +
-								"28-19-12," +
-								
-								"29-9-28," +
-								"29-11-2," +
-								
-								"30-15-5," +
-								"30-28-37," +
-								"30-27-15," +
-								"30-18-15," +
-								
-								"31-6-4," +
-								"31-13-22," +
-								"31-28-22," +
-								"31-4-7," +
-								"31-22-13," +
-								"31-28-34," +
-								
-								"32-23-5," +
-								"32-14-5," +
-								
-								"33-36-6," +
-								"33-4-7," +
-								"33-6-31," +
-								"33-22-31," +
-								"33-24-31," +
-								"33-24-22," +
-								
-								"34-14-17," +
-								
-								"35-2-8," +
-								"35-8-11," +
-								"35-26-11," +
-								"35-6-4," +
-								"35-17-7," +
-								
-								"36-1-18," +
-								"36-24-18," +
-								"36-33-18," +
-								"36-15-18," +
-								"36-9-18," +
-								"36-12-24," +
-								"";
 	
-	static String quadruples = 	"1-10-19-28," +
-								"1-10-19-37," +
-								"1-10-19-37," +
-
-			"2-5-8-11," +
-			"2-5-11-29," +
-			"2-5-8-11," +
-			"2-5-7-35," +
-
-			"3-5-8-11," +
-
-			"4-13-33-28," +
-			"4-13-22-31," +
-			"4-7-16-34," +
-			"4-7-16-19," +
-			"4-12-33-31," +
-
-			"5-14-23-32," +
-			"5-10-28-30," +
-			"5-7-11-32," +
-			"5-7-12-4," +
-			"5-23-32-38," +
-			"5-7-19-28," +
-			"5-10-19-28," +
-			"5-19-28-37," +
-
-			"6-28-31-33," +
-			"6-27-30-33," +
-			"6-28-35-44," +
-			"6-21-24-36," +
-
-			"7-4-16-34," +
-			"7-16-19-37," +
-			"7-16-25-34," +
-			"7-16-19-27," +
-			"7-16-25-27," +
-			"7-16-25-43," +
-			"7-5-16-19," +
-			"7-5-12-16," +
-			"7-16-25-34," +
-
-			"8-11-14-17," +
-			"8-11-14-17," +
-			"8-2-17-35," +
-			"8-17-26-35," +
-			"8-11-35-38," +
-			"8-26-35-44," +
-
-			"9-15-18-21," +
-			"9-18-27-30," +
-			"9-21-24-36," +
-			"9-12-19-29," +
-			"9-12-18-36," +
-			"9-19-28-31," +
-			"9-19-28-29," +
-			"9-19-31-37," +
-
-			"10-1-5-37," +
-			"10-5-28-30," +
-			"10-5-15-28," +
-			"10-27-30-37," +
-			"10-28-37-40," +
-
-			"11-2-22-4," +
-			"11-5-28-30," +
-			"11-2-29-33," +
-			"11-4-22-33," +
-			"11-8-33-44," +
-			"11-5-8-29," +
-
-			"12-4-24-27," +
-			"12-28-31-25," +
-			"12-4-25-34," +
-			"12-5-25-34," +
-
-			"13-4-22-34," +
-			"13-4-22-28," +
-			"13-4-22-44," +
-			"13-4-22-26," +
-
-			"14-5-17-34," +
-			"14-5-17-23," +
-			"14-17-34-7," +
-			"14-15-28-5," +
-
-			"15-18-21-30," +
-			"15-18-27-30," +
-			"15-5-10-30," +
-			"15-5-28-37," +
-			"15-10-37-40," +
-			"15-5-23-32," +
-
-			"16-19-18-9," +
-			"16-19-7-25," +
-			"16-19-34-43," +
-			"16-7-34-43," +
-			"16-18-32-34," +
-
-			"17-14-8-35," +
-			"17-8-26-35," +
-			"17-14-35-44," +
-			"17-5-8-11," +
-			"17-11-26-29," +
-			"17-14-34-8," +
-			"17-26-8-44," +
-
-			"18-9-27-36," +
-			"18-15-27-36," +
-			"18-15-21-24," +
-			"18-9-36-45," +
-			"18-16-27-36," +
-
-			"19-9-10-1," +
-			"19-9-29-1," +
-			"19-9-28-37," +
-			"19-1-10-37," +
-			"19-9-10-1," +
-
-			"20-5-13-14," +
-			"20-28-5-40," +
-
-			"21-3-24-12," +
-			"21-4-7-12," +
-			"21-24-27-3," +
-			"21-24-27-30," +
-
-			"22-11-4-33," +
-			"22-7-13-44," +
-			"22-23-13-44," +
-			"22-4-13-44," +
-			"22-24-13-33," +
-			"22-4-11-31," +
-			"22-4-7-33," +
-
-			"23-5-32-35," +
-			"23-32-35-38," +
-			"23-14-17-32," +
-			"23-5-14-32," +
-			"23-5-25-27," +
-
-			"24-22-21-12," +
-			"24-4-12-27," +
-			"24-21-12-36," +
-
-			"25-7-27-16," +
-			"25-7-4-43," +
-			"25-7-12-27," +
-			"25-7-12-16," +
-			"25-7-27-43," +
-
-			"26-28-8-13," +
-			"26-17-8-38," +
-			"26-8-35-13," +
-			"26-29-8-35," +
-			"26-8-11-35," +
-
-			"27-7-30-4," +
-			"27-25-30-4," +
-			"27-7-25-4," +
-			"27-7-9-12," +
-			"27-7-30-24," +
-			"27-8-18-36," +
-
-			"28-31-6-12," +
-			"28-31-16-19," +
-			"28-31-10-19," +
-			"28-31-10-1," +
-			"28-4-13-1," +
-
-			"29-2-11-9," +
-			"29-4-11-9," +
-			"29-19-11-2," +
-			"29-19-11-2," +
-			"29-19-25-27," +
-			"29-9-25-27," +
-			"29-9-11-33," +
-			"29-35-6-11," +
-
-			"30-15-28-37," +
-			"30-15-27-37," +
-			"30-15-27-25," +
-			"30-15-37-40," +
-			"30-7-37-40," +
-			"30-7-19-28," +
-
-			"31-28-6-4," +
-			"31-13-4-44," +
-			"31-22-4-44," +
-			"31-22-13-33," +
-			"31-4-7-11," +
-			"31-11-7-22," +
-
-			"32-23-25-27," +
-			"32-5-23-35," +
-			"32-5-12-23," +
-			"32-5-35-23," +
-			"32-5-7-23," +
-
-			"33-4-7-6," +
-			"33-4-6-36," +
-			"33-4-7-11," +
-			"33-11-7-6," +
-			"33-11-7-6," +
-			"33-11-24-6," +
-
-			"34-16-14-17," +
-			"34-3-14-17," +
-			"34-3-7-16," +
-
-			"35-32-26-8," +
-			"35-38-11-2," +
-			"35-8-11-2," +
-			"35-8-11-26," +
-			"35-23-11-26," +
-			"35-6-11-33," +
-
-			"36-1-33-18," +
-			"36-18-33-9," +
-			"36-18-15-9," +
-			"36-18-24-9," +
-			"36-18-24-12," +
-			"36-33-16-19," +
-
-			"";
 		
 	static String ozRules = 	//OZ Most Common Pairs
 								"17-34," +
@@ -739,13 +317,32 @@ public final class RulesValidator {
 								"21-22," +
 								"";
 	
-	public static List<ArrayList<Integer>> loadRules() {
+	public static void loadRules() {
+		singleRules = loadSingleRules();
+		multiRules = loadMultiRules();
+	}
+	
+	public static List<Integer> loadSingleRules() {
+		List<Integer> rulesList = new ArrayList<Integer>();
+		
+		String[] numberArray = singleRule.split("-", -1);
+		for(String str : numberArray) {
+			Integer number = Integer.valueOf(str);
+			if(!(number > playType.getNumberLimit()) && !rulesList.contains(number)) {
+				rulesList.add(number);
+			} 
+		}
+		return rulesList;
+	}
+	
+	public static List<ArrayList<Integer>> loadMultiRules() {
 		List<ArrayList<Integer>> rulesList = new ArrayList<ArrayList<Integer>>();
-		String[] rules = decideRules().split(",", -1);
-		for(String rule : rules) {
-			if(!rule.trim().isEmpty()) {
-				String[] numberArray = rule.split("-", -1);
-				ArrayList<Integer> ruleList = new ArrayList<Integer>();
+		
+		String[] rules = loadStatisticalRules().split(",", -1);
+		for(String pair : rules) {
+			if(!pair.trim().isEmpty()) {
+				String[] numberArray = pair.split("-", -1);
+				ArrayList<Integer> rule = new ArrayList<Integer>();
 				boolean flag = true;
 				for(String str : numberArray) {
 					Integer number = Integer.valueOf(str);
@@ -753,50 +350,43 @@ public final class RulesValidator {
 						flag = false;
 						break;
 					} else {
-						ruleList.add(number);
+						rule.add(number);
 					}
 				}
-				if(flag && !ruleList.isEmpty() && !ruleListContainsRule(rulesList, ruleList)) {
-					rulesList.add(ruleList);
+				if(flag && !rule.isEmpty() && !ruleListContainsRule(rulesList, rule)) {
+					rulesList.add(rule);
 				}
 			}
 		}
 		return rulesList;
 	}
 	
-	public static String decideRules() {
-		
-		String rules = doubleRules + tripleRules;
-
+	public static String loadStatisticalRules() {
 		if(playType == PlayType.OZ) {
-			rules = rules + ozRules + quadruples;
+			multiRule = multiRule + ozRules;
 		} else if(playType == PlayType.PB) {
-			rules = rules + pbRules + quadruples;
+			multiRule = multiRule + pbRules;
 		} else if(playType == PlayType.SL) {
-			rules = rules + slRules + quadruples;
+			multiRule = multiRule + slRules;
 		} else if(playType == PlayType.SFL) {
-			rules = rules + sflRules + quadruples;
+			multiRule = multiRule + sflRules;
 		} else if(playType == PlayType.ML) {
-			rules = rules + mlRules + quadruples;
+			multiRule = multiRule + mlRules;
 		} else if(playType == PlayType.WL) {
-			rules = rules + wlRules + quadruples;
+			multiRule = multiRule + wlRules;
 		}
-
-		
-		return rules;
+		return multiRule;
 	}
 	
-	public static boolean validateRules(List<ArrayList<Integer>> rules, List<ArrayList<Integer>> lines, List<ArrayList<Integer>> validLines) {
+	public static boolean validateRules(List<ArrayList<Integer>> lines, List<ArrayList<Integer>> validLines) {
 		for(int j = 0; j < lines.size(); j++){
-			float passedRuleCount = 0;
 			ArrayList<Integer> line = lines.get(j);
-			for(int i = 0; i < rules.size(); i++){
-				ArrayList<Integer> rule = rules.get(i);
-				if(lineContainsRule(line, rule)) {
-					passedRuleCount++;
-				}
-			}
-			if(validLine(rules.size(), passedRuleCount)) {
+			
+			boolean validSingleRule = validateSingleRules(line);
+			
+			boolean validMultiRule = validateMultiRules(line);
+			
+			if(validSingleRule && validMultiRule) {
 				validLines.add(line);
 				if(validLines.size() == playType.getRequiredLines()) {
 					return true;
@@ -805,16 +395,39 @@ public final class RulesValidator {
 				lines.remove(j);
 				j--;
 			}
+			
 		}
 		return false;
 	}
-
-	public static boolean validLine(final float totalRuleSize, final float passedRuleCount) {
-		float ruleFactor = passedRuleCount/totalRuleSize;
-		float rulePercentage = (passedRuleCount * 100)/totalRuleSize;
-		if(rulePercentage >= playType.getRulesFactor()) {
+	
+	public static boolean validateSingleRules(ArrayList<Integer> line) {
+		int passedRuleCount = 0;
+		for(Integer number : line) {
+			if(singleRules.contains(number)) {
+				passedRuleCount++;
+			}
+		}
+		
+		if(passedRuleCount >= playType.getMinSingleRuleCount() && passedRuleCount <= playType.getMaxSingleRuleCount()){
 			return true;
 		}
+		return false;
+	}
+	
+	public static boolean validateMultiRules(ArrayList<Integer> line) {
+		float passedRuleCount = 0;
+		
+		for(int i = 0; i < multiRules.size(); i++){
+			ArrayList<Integer> rule = multiRules.get(i);
+			if(lineContainsRule(line, rule)) {
+				passedRuleCount++;
+			}
+		}
+		
+		if(passedRuleCount >= playType.getMinMultiRuleCount() && passedRuleCount <= playType.getMaxMultiRuleCount()){
+			return true;
+		}
+			
 		return false;
 	}
 
@@ -842,6 +455,34 @@ public final class RulesValidator {
 	}	
 	
 	public static void main(String[] args) {
+		playType = PlayType.SFL;
+		
 		loadRules();
+		
+		System.out.println("Total Rules Size : " + (singleRules.size() + multiRules.size()));
+		
+		System.out.println("Single Rules Size : " + singleRules.size());
+		System.out.println("Single Rule Number Occurances : ");
+		System.out.println(singleRules);
+		
+		HashMap<Integer, Integer> rulesMap = getRuleOccurances(multiRules);
+		System.out.println("Multi Rules Size: " + multiRules.size());
+		System.out.println("Multi Rule Number Occurances : ");
+		System.out.println(rulesMap);
+	}
+	
+	public static HashMap<Integer, Integer> getRuleOccurances(List<ArrayList<Integer>> rules) {
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		
+		for(ArrayList<Integer> row : rules) {
+			for(int number : row) {
+				if(map.containsKey(number)) {
+					map.put(number, map.get(number) + 1);
+				} else {
+					map.put(number, 1);
+				}
+			}
+		}
+		return map;
 	}
 }

@@ -5,7 +5,7 @@ import static com.number.generator.util.GenerateNumberUtil.getLinesRequired;
 import static com.number.generator.util.NumberOccuranceValidator.validateOccurances;
 import static com.number.generator.util.RulesValidator.loadRules;
 import static com.number.generator.util.RulesValidator.validateRules;
-
+import static com.number.generator.util.RulesValidator.getRuleOccurances;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +21,7 @@ public class NumberGenerator2 {
 
 	public static void main(String[] args) {
 		int count = 1;
-		PlayType playType = PlayType.SFL;
+		PlayType playType = PlayType.OZ;
 		
 		RulesValidator.playType = playType;
 		GenerateNumberUtil.playType = playType;
@@ -29,11 +29,12 @@ public class NumberGenerator2 {
 		ColumnNumbers.playType = playType;
 		NumberOccuranceValidator.playType = playType;
 		
-		List<ArrayList<Integer>> rules = loadRules();
+		loadRules();
+		HashMap<Integer, Integer> rulesMap = getRuleOccurances(RulesValidator.multiRules);
 		List<ArrayList<Integer>> validLines = new ArrayList<ArrayList<Integer>>();
 		while(true) {
 			List<ArrayList<Integer>> rawLines = new ArrayList<ArrayList<Integer>>();
-			HashMap<Integer, Integer> numberStatsMap = new HashMap<Integer, Integer>();
+			HashMap<Integer, Integer> numbersMap = new HashMap<Integer, Integer>();
 			
 			RowNumbers.rawLines = rawLines;
 			RowNumbers.generate_row_numbers();
@@ -45,22 +46,21 @@ public class NumberGenerator2 {
 			
 			//List<ArrayList<Integer>> requiredLines = getLinesRequired(rawLines);
 			
-			boolean isFrequencyValid = validateOccurances(rawLines, numberStatsMap);
+			boolean isFrequencyValid = validateOccurances(rawLines, numbersMap);	
 			if(isFrequencyValid) {
-				boolean isRulesValid = validateRules(getcopy(rules), rawLines, validLines);
+				boolean isRulesValid = validateRules(rawLines, validLines);
 				System.out.print(". ");
 				count++;
 				if(isRulesValid) {
 					System.out.println();
-					generateLines(totalLineCount, validLines, numberStatsMap);
+					generateLines(totalLineCount, rawLines, numbersMap, rulesMap);
 					System.out.println("Number of attempts: " + count);
 					break;
 				}
 			}
 		}
 	}
-
-
+	
 	public static List<ArrayList<Integer>> getcopy(List<ArrayList<Integer>> rules) {
 		List<ArrayList<Integer>> destRules = new ArrayList<ArrayList<Integer>>();
 		for(List<Integer> rule : rules) {
