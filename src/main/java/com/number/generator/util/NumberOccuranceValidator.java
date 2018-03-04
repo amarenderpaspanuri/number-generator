@@ -20,7 +20,6 @@ public final class NumberOccuranceValidator {
 		
 		int totalNumbers = rowCount * playType.getNumbersPerLine();
 		int average = Math.round(totalNumbers / playType.getNumberLimit());
-		//int minFrequency = Math.round(average - (NUMBERS_PER_LINE / 2));
 		int minFrequency = Math.round(average * playType.getMinNumberOccuranceFactor());
 		int maxFrequency = Math.round(average * playType.getMaxNumberOccuranceFactor());
 		for(Map.Entry<Integer, Integer> entry : map.entrySet()) {

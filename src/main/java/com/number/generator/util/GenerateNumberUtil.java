@@ -35,7 +35,7 @@ public final class GenerateNumberUtil {
 			System.out.println(line);
 		}
 		
-		System.out.println("Total Lines : " + totalLineCount);
+		System.out.println("Total raw Lines : " + totalLineCount);
 		System.out.println("Required Lines : " + lines.size());
 		System.out.println("Number Occurances : ");
 		System.out.println(numbersMap);
