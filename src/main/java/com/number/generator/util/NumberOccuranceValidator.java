@@ -11,12 +11,10 @@ public final class NumberOccuranceValidator {
 
 	public static PlayType playType;
 	
-	public static boolean validateOccurances(List<ArrayList<Integer>> lines, HashMap<Integer, Integer> map) {
-		int rowCount = lines.size();
+	public static boolean validateOccurances(List<ArrayList<Integer>> lines) {
+		HashMap<Integer, Integer> map = getNumberOccurances(lines);
 		
-		for(ArrayList<Integer> row : lines) {
-			countNumberOccurances(row, map);
-		}
+		int rowCount = lines.size();
 		
 		int totalNumbers = rowCount * playType.getNumbersPerLine();
 		int average = Math.round(totalNumbers / playType.getNumberLimit());
@@ -28,6 +26,16 @@ public final class NumberOccuranceValidator {
 			}
 		}
 		return true;
+	}
+	
+	public static HashMap<Integer, Integer> getNumberOccurances(List<ArrayList<Integer>> lines) {
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		
+		for(ArrayList<Integer> row : lines) {
+			countNumberOccurances(row, map);
+		}
+		
+		return map;
 	}
 	
 	public static void countNumberOccurances(List<Integer> row, Map<Integer, Integer> map) {

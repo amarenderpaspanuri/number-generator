@@ -23,17 +23,14 @@ public class NumberGenerator2 {
 
 	public static boolean testMode = false;
 	public static void main(String[] args) {
-		int totalLineCount = 0;
+		int rawLineCount = 0;
 		int numberOfAttempts = 0;
 		PlayType playType = PlayType.OZ;
 		
-		RulesValidator.playType = playType;
-		GenerateNumberUtil.playType = playType;
-		RowNumbers.playType = playType;
-		ColumnNumbers.playType = playType;
-		NumberOccuranceValidator.playType = playType;
+		initPlayType(playType);
 		
 		loadRules();
+		
 		HashMap<Integer, Integer> rulesMap = getRuleOccurances(RulesValidator.multiRules);
 		List<ArrayList<Integer>> validLines = new ArrayList<ArrayList<Integer>>();
 		while(true) {
@@ -46,7 +43,7 @@ public class NumberGenerator2 {
 			ColumnNumbers.rawLines = rawLines;
 			ColumnNumbers.generate_column_numbers();
 			
-			totalLineCount += rawLines.size();
+			rawLineCount += rawLines.size();
 			
 			numberOfAttempts++;
 			
@@ -55,17 +52,18 @@ public class NumberGenerator2 {
 				isOccuranceValid = true;
 				rawLines = getTestLines();
 			} else {
-				rawLines = getLinesRequired(rawLines);
-				isOccuranceValid = validateOccurances(rawLines, numbersMap);
+				//rawLines = getLinesRequired(rawLines);
+				isOccuranceValid = validateOccurances(rawLines);
+				System.out.print(". ");
 			}
 			
 			if(isOccuranceValid) {
-				System.out.print("O ");
+				System.out.print("OV ");
 				boolean isRulesValid = validateRules(rawLines, validLines);
 				if(isRulesValid) {
-					System.out.print("R ");
+					System.out.print("RV ");
 					System.out.println();
-					generateLines(totalLineCount, rawLines, numbersMap, rulesMap);
+					generateLines(rawLineCount, validLines, rulesMap);
 					System.out.println("Number of attempts: " + numberOfAttempts);
 					break;
 				}
@@ -73,6 +71,13 @@ public class NumberGenerator2 {
 		}
 	}
 	
+	public static void initPlayType(PlayType playType) {
+		RulesValidator.playType = playType;
+		GenerateNumberUtil.playType = playType;
+		RowNumbers.playType = playType;
+		ColumnNumbers.playType = playType;
+		NumberOccuranceValidator.playType = playType;
+	}
 	public static List<ArrayList<Integer>> getcopy(List<ArrayList<Integer>> rules) {
 		List<ArrayList<Integer>> destRules = new ArrayList<ArrayList<Integer>>();
 		for(List<Integer> rule : rules) {

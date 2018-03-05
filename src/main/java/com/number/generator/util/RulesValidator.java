@@ -123,6 +123,7 @@ public final class RulesValidator {
 								
 								"24-6," +
 								"24-27," +
+								"24-30," +
 								
 								"25-7," +
 								"25-12," +

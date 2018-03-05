@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.number.generator.type.PlayType;
+import static com.number.generator.util.NumberOccuranceValidator.getNumberOccurances;
 
 public final class GenerateNumberUtil {
 
@@ -29,16 +30,17 @@ public final class GenerateNumberUtil {
 		return lines;
 	}
 	
-	public static void generateLines(int totalLineCount, List<ArrayList<Integer>> lines
-			, HashMap<Integer, Integer> numbersMap, HashMap<Integer, Integer> rulesMap) {
-		for(ArrayList<Integer> line : lines) {
+	public static void generateLines(int rawLinesCount, List<ArrayList<Integer>> validLines, HashMap<Integer, Integer> rulesMap) {
+		
+		for(ArrayList<Integer> line : validLines) {
 			System.out.println(line);
 		}
 		
-		System.out.println("Total raw Lines : " + totalLineCount);
-		System.out.println("Required Lines : " + lines.size());
-		System.out.println("Number Occurances : ");
-		System.out.println(numbersMap);
+		System.out.println("Total raw Lines : " + rawLinesCount);
+		System.out.println("Required Lines : " + playType.getRequiredLines());
+		System.out.println("Generated Lines : " + validLines.size());
+		System.out.println("Valid Number Occurances : ");
+		System.out.println(getNumberOccurances(validLines));
 		System.out.println("Rule Occurances : ");
 		System.out.println(rulesMap);
 	}
