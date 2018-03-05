@@ -35,7 +35,6 @@ public class NumberGenerator2 {
 		List<ArrayList<Integer>> validLines = new ArrayList<ArrayList<Integer>>();
 		while(true) {
 			List<ArrayList<Integer>> rawLines = new ArrayList<ArrayList<Integer>>();
-			HashMap<Integer, Integer> numbersMap = new HashMap<Integer, Integer>();
 			
 			RowNumbers.rawLines = rawLines;
 			RowNumbers.generate_row_numbers();
@@ -52,7 +51,7 @@ public class NumberGenerator2 {
 				isOccuranceValid = true;
 				rawLines = getTestLines();
 			} else {
-				//rawLines = getLinesRequired(rawLines);
+				rawLines = getLinesRequired(rawLines);
 				isOccuranceValid = validateOccurances(rawLines);
 				System.out.print(". ");
 			}
@@ -93,7 +92,7 @@ public class NumberGenerator2 {
 	public static List<ArrayList<Integer>> getTestLines() {
 		List<ArrayList<Integer>> testLines = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> testLine = new ArrayList<Integer>();
-		testLine.addAll(Arrays.asList(new Integer[]{7, 20, 21, 32, 35, 44, 45}));
+		testLine.addAll(Arrays.asList(new Integer[]{1, 4, 15, 17, 28, 34, 36}));
 		testLines.add(testLine);
 		return testLines;
 	}

@@ -48,7 +48,7 @@ public enum PlayType {
     }
     
     public static class Constants {
-        public static final int LINES_REQUIRED = 50;
+        public static final int LINES_REQUIRED = 1;
         public static final int NUMBER_OF_REPETITIONS = 1;
     }
 
