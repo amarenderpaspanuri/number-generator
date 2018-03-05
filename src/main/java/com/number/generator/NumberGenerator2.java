@@ -25,7 +25,7 @@ public class NumberGenerator2 {
 	public static void main(String[] args) {
 		int rawLineCount = 0;
 		int numberOfAttempts = 0;
-		PlayType playType = PlayType.OZ;
+		PlayType playType = PlayType.SL;
 		
 		initPlayType(playType);
 		
@@ -92,7 +92,7 @@ public class NumberGenerator2 {
 	public static List<ArrayList<Integer>> getTestLines() {
 		List<ArrayList<Integer>> testLines = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> testLine = new ArrayList<Integer>();
-		testLine.addAll(Arrays.asList(new Integer[]{1, 4, 15, 17, 28, 34, 36}));
+		testLine.addAll(Arrays.asList(new Integer[]{17, 27, 1, 22, 10, 5, 8, 2}));
 		testLines.add(testLine);
 		return testLines;
 	}

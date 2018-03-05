@@ -16,7 +16,7 @@ public final class RulesValidator {
 	
 	static String singleRule = "2-4-5-7-8-9-11-14-15-19-21-23-25-26-27-28-29-31-32-33-35-37-38-43-45" + "";
 	
-	static String multiRule = "1-10," +
+	static String multiRule =   "1-10," +
 								"1-19," +
 								"1-28," +
 								"1-36," +
@@ -24,6 +24,7 @@ public final class RulesValidator {
 								
 								"2-5," +
 								"2-11," +
+								"2-26," +
 								"2-29," +
 								"2-35," +
 								
@@ -38,6 +39,7 @@ public final class RulesValidator {
 								
 								"5-7," +
 								"5-10," +
+								"5-12," +
 								"5-15," + //**
 								"5-23," +
 								"5-32," +
@@ -64,6 +66,7 @@ public final class RulesValidator {
 								"9-19," +
 								"9-27," +
 								"9-29," +
+								"9-45," +
 								
 								"10-15," +
 								"10-30," +
@@ -74,6 +77,7 @@ public final class RulesValidator {
 								"11-29," +
 								"11-22," +
 								"11-33," +
+								"11-35," + //***
 								
 								"12-6," +
 								"12-18," +
@@ -89,6 +93,7 @@ public final class RulesValidator {
 								"14-5," +
 								"14-17," +
 								"14-34," +
+								"14-35," + //***
 								
 								"15-18," +
 								"15-30," +
@@ -185,6 +190,14 @@ public final class RulesValidator {
 								"7-8," +
 								"34-35," +
 								"15-16," +
+								
+								"1-34," + //OZ
+								"1-43," + //OZ
+								"1-45," + //OZ
+								"2-7," + //OZ
+								"3-36," + //OZ
+								"3-45," + //OZ
+								"23-26," + //OZ
 								"";
 
 	static String pbRules =		//PB Most Common Pairs
@@ -210,6 +223,11 @@ public final class RulesValidator {
 								"24-25," +
 								"16-17," +
 								"23-24," +
+								
+								"7-12," + //PB
+								"35-38," +//PB
+								"13-36," +//PB
+								"34-37," +//PB
 								"";
 									
 	static String slRules =	//SL Most Common Pairs
@@ -235,6 +253,11 @@ public final class RulesValidator {
 								"10-11," +
 								"11-12," +
 								"42-43," +
+								
+								"36-45," + //SL
+								"3-30," + //SL
+								"1-11," + //SL
+								"11-32," + //SL
 								"";
 
 	static String mlRules =		//ML Most Common Pairs
@@ -409,7 +432,10 @@ public final class RulesValidator {
 			}
 		}
 		
-		if(passedRuleCount >= playType.getMinSingleRuleCount() && passedRuleCount <= playType.getMaxSingleRuleCount()){
+		/*if(passedRuleCount >= playType.getMinSingleRuleCount() && passedRuleCount <= playType.getMaxSingleRuleCount()){
+			return true;
+		}*/
+		if(passedRuleCount >= playType.getMinSingleRuleCount()){
 			return true;
 		}
 		return false;
@@ -425,7 +451,10 @@ public final class RulesValidator {
 			}
 		}
 		
-		if(passedRuleCount >= playType.getMinMultiRuleCount() && passedRuleCount <= playType.getMaxMultiRuleCount()){
+		/*if(passedRuleCount >= playType.getMinMultiRuleCount() && passedRuleCount <= playType.getMaxMultiRuleCount()){
+			return true;
+		}*/
+		if(passedRuleCount >= playType.getMinMultiRuleCount()){
 			return true;
 		}
 			
