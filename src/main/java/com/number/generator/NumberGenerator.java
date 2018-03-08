@@ -1,116 +1,99 @@
 package com.number.generator;
 
-import static com.number.generator.constants.NumberConstants.MAX_MAIN_NUMBERS;
-import static com.number.generator.util.ColumnUtil.generate_column_numbers;
-import static com.number.generator.util.CommonUtil.printNumbers;
-import static com.number.generator.util.DateUtil.add_dates_weightage;
-import static com.number.generator.util.DozenUtil.generate_dozen_numbers;
-import static com.number.generator.util.WeightageUtil.add_my_weightage;
-import static com.number.generator.util.WeightageUtil.add_system_weightage;
-import static com.number.generator.util.WeightageUtil.generate_weightage_numbers;
-import static com.number.generator.util.FlagUtil.generate_flag_numbers;
-import static com.number.generator.constants.NumberConstants.USE_DATES;
-import static com.number.generator.constants.NumberConstants.SUPPLEMENT_REQUIRED;
-import static com.number.generator.util.SupplementaryUtil.generate_supplementary_number;
-import static com.number.generator.constants.NumberConstants.GENERATE_WEIGHTAGE_NUMBERS;
-import static com.number.generator.constants.NumberConstants.GENERATE_COLUMN_NUMBERS;
-import static com.number.generator.constants.NumberConstants.GENERATE_DOZEN_NUMBERS;
-import static com.number.generator.constants.NumberConstants.GENERATE_FLAG_NUMBERS;
-import static com.number.generator.constants.NumberConstants.ADD_SYSTEM_WEIGHTAGE;
-import static com.number.generator.constants.NumberConstants.ADD_MY_WEIGHTAGE;
+import static com.number.generator.util.GenerateNumberUtil.generateLines;
+import static com.number.generator.util.NumberOccuranceValidator.validateOccurances;
+import static com.number.generator.util.RulesValidator.getRuleOccurances;
+import static com.number.generator.util.RulesValidator.loadRules;
+import static com.number.generator.util.RulesValidator.validateRules;
+import static com.number.generator.util.GenerateNumberUtil.getLinesRequired;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
-import com.number.generator.dto.RandomNumber;
-import com.number.generator.util.ColumnUtil;
-import com.number.generator.util.CommonUtil;
-import com.number.generator.util.DateUtil;
-import com.number.generator.util.DozenUtil;
-import com.number.generator.util.FlagUtil;
-import com.number.generator.util.SupplementaryUtil;
-import com.number.generator.util.WeightageUtil;
+import com.number.generator.type.PlayType;
+import com.number.generator.util.ColumnNumbers;
+import com.number.generator.util.GenerateNumberUtil;
+import com.number.generator.util.NumberOccuranceValidator;
+import com.number.generator.util.RowNumbers;
+import com.number.generator.util.RulesValidator;
 
-public class NumberGenerator {
+public class NumberGenerator2 {
 
-	private static ArrayList<RandomNumber> randomNumbers;
-	private static List<ArrayList<RandomNumber>> finalNumbers;
-
+	public static boolean testMode = false;
 	public static void main(String[] args) {
-		initialize();
+		int rawLineCount = 0;
+		int numberOfAttempts = 0;
+		PlayType playType = PlayType.OZ;
 		
-		//assign numbers to util classes
-		add_intial_numbers();
-				
-		//add system/my/date weightages
-		add_weightages();
+		initPlayType(playType);
 		
-		generateNumbers();
+		loadRules();
 		
-		if(SUPPLEMENT_REQUIRED) {
-			generate_supplementary_number();
+		HashMap<Integer, Integer> rulesMap = getRuleOccurances(RulesValidator.multiRules);
+		List<ArrayList<Integer>> validLines = new ArrayList<ArrayList<Integer>>();
+		while(true) {
+			List<ArrayList<Integer>> rawLines = new ArrayList<ArrayList<Integer>>();
+			
+			RowNumbers.rawLines = rawLines;
+			RowNumbers.generate_row_numbers();
+			
+			ColumnNumbers.rawLines = rawLines;
+			ColumnNumbers.generate_column_numbers();
+			
+			rawLineCount += rawLines.size();
+			
+			numberOfAttempts++;
+			
+			boolean isOccuranceValid = false;
+			if(testMode) {
+				isOccuranceValid = true;
+				rawLines = getTestLines();
+			} else {
+				rawLines = getLinesRequired(rawLines);
+				isOccuranceValid = validateOccurances(rawLines);
+				System.out.print(". ");
+			}
+			
+			if(isOccuranceValid) {
+				System.out.print("OV ");
+				boolean isRulesValid = validateRules(rawLines, validLines);
+				if(isRulesValid) {
+					System.out.print("RV ");
+					System.out.println();
+					generateLines(rawLineCount, validLines, rulesMap);
+					System.out.println("Number of attempts: " + numberOfAttempts);
+					break;
+				}
+			}
 		}
-		
-		printNumbers();
 	}
 	
-	private static void initialize() {
-		finalNumbers = new ArrayList<ArrayList<RandomNumber>>();
-		CommonUtil.finalNumbers = finalNumbers;
-		
-		randomNumbers = new ArrayList<RandomNumber>();
-		WeightageUtil.randomNumbers = randomNumbers;
-		DateUtil.randomNumbers = randomNumbers;
-		ColumnUtil.randomNumbers = randomNumbers;
-		DozenUtil.randomNumbers = randomNumbers;
-		FlagUtil.randomNumbers = randomNumbers;
-		SupplementaryUtil.finalNumbers = finalNumbers;
+	public static void initPlayType(PlayType playType) {
+		RulesValidator.playType = playType;
+		GenerateNumberUtil.playType = playType;
+		RowNumbers.playType = playType;
+		ColumnNumbers.playType = playType;
+		NumberOccuranceValidator.playType = playType;
+	}
+	public static List<ArrayList<Integer>> getcopy(List<ArrayList<Integer>> rules) {
+		List<ArrayList<Integer>> destRules = new ArrayList<ArrayList<Integer>>();
+		for(List<Integer> rule : rules) {
+			ArrayList<Integer> destRule = new ArrayList<Integer>();
+			for(Integer ruleNumber : rule) {
+				destRule.add(ruleNumber);
+			}
+			destRules.add(destRule);
+		}
+		return destRules;
 	}
 	
-	private static void add_intial_numbers() {
-		for(int i=1; i <= MAX_MAIN_NUMBERS; i++) {
-			RandomNumber randomNumber = new RandomNumber();
-			randomNumber.setValue(i);
-			randomNumbers.add(randomNumber);
-		}
-	}
-	
-	private static void add_weightages() {
-		if(ADD_SYSTEM_WEIGHTAGE) {
-			add_system_weightage();
-		}
-		
-		if(ADD_MY_WEIGHTAGE) {
-			add_my_weightage();
-		}
-		
-		if(USE_DATES) {
-			add_dates_weightage();
-		}
-	}
-
-	private static void generateNumbers() {
-		//rules
-		
-		// Weightage - 14
-		if(GENERATE_WEIGHTAGE_NUMBERS) {
-			generate_weightage_numbers();
-		}
-		
-		
-		//columns - 6
-		if(GENERATE_COLUMN_NUMBERS) {
-			generate_column_numbers();
-		}
-		
-		
-		//3. dozens - 6
-		if(GENERATE_DOZEN_NUMBERS) {
-			generate_dozen_numbers();
-		}
-		
-		//4. isDefault/ isEquals / isEndsWith/ isAddsWith/ isMultiple - 11
-		if(GENERATE_FLAG_NUMBERS) {
-			generate_flag_numbers();
-		}
+	public static List<ArrayList<Integer>> getTestLines() {
+		List<ArrayList<Integer>> testLines = new ArrayList<ArrayList<Integer>>();
+		ArrayList<Integer> testLine = new ArrayList<Integer>();
+		testLine.addAll(Arrays.asList(new Integer[]{30, 9, 18, 27, 19, 12, 5,12}));
+		testLines.add(testLine);
+		return testLines;
 	}
 }
