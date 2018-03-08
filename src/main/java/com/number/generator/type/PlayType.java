@@ -1,12 +1,12 @@
 package com.number.generator.type;
 
 public enum PlayType {
-    OZ("oz",   45, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 4),
-    PB("pb",   40, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 20, true,  false, 0.7f, 1.4f, 3, 5, 3, 4),
-    SL("sl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4),
-    ML("ml",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4),
-    WL("wl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4),
-    SFL("sfl", 37, 8, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 4);
+    OZ("oz",   45, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
+    PB("pb",   40, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 20, true,  false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
+    SL("sl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4, 6),
+    ML("ml",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4, 6),
+    WL("wl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 4, 3, 4, 6),
+    SFL("sfl", 37, 8, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 6, 7);
     
 	private String value;
 	private int numberLimit;
@@ -25,12 +25,15 @@ public enum PlayType {
 	
 	private int minMultiRuleCount;
 	private int maxMultiRuleCount;
+
+	private int maxTotalRuleCount;
 	
     PlayType(String value, int numberLimit, int numbersPerLine, int requiredLines, int repetitions,
     		int supplementaryNumberLimit, boolean supplemantaryRequired, boolean duplicatesAllowed, 
     		float minNumberOccuranceFactor, float maxNumberOccuranceFactor, 
     		int minSingleRuleCount, int maxSingleRuleCount,
-    		int minMultiRuleCount, int maxMultiRuleCount) {
+    		int minMultiRuleCount, int maxMultiRuleCount,
+			 int maxTotalRuleCount) {
     	this.value = value;
     	this.numberLimit = numberLimit;
     	this.numbersPerLine = numbersPerLine;
@@ -45,6 +48,7 @@ public enum PlayType {
     	this.maxSingleRuleCount = maxSingleRuleCount;
     	this.minMultiRuleCount = minMultiRuleCount;
     	this.maxMultiRuleCount = maxMultiRuleCount;
+		this.maxTotalRuleCount = maxTotalRuleCount;
     }
     
     public static class Constants {
@@ -162,5 +166,13 @@ public enum PlayType {
 
 	public void setMaxMultiRuleCount(int maxMultiRuleCount) {
 		this.maxMultiRuleCount = maxMultiRuleCount;
+	}
+
+	public int getMaxTotalRuleCount() {
+		return maxTotalRuleCount;
+	}
+
+	public void setMaxTotalRuleCount(int maxTotalRuleCount) {
+		this.maxTotalRuleCount = maxTotalRuleCount;
 	}
 }
