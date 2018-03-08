@@ -1,9 +1,6 @@
 package com.number.generator.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import com.number.generator.type.PlayType;
 
@@ -13,6 +10,12 @@ public final class RulesValidator {
 	
 	public static List<Integer> singleRules;
 	public static List<ArrayList<Integer>> multiRules;
+
+	public static List<Integer> appliedSingleRules = new ArrayList<Integer>();
+	public static List<ArrayList<Integer>> appliedMultiRules = new ArrayList<ArrayList<Integer>>();
+
+	public static HashMap<String, Integer> appliedSingleRuleMap = new HashMap<String, Integer>();
+	public static HashMap<String, Integer> appliedMultiRuleMap = new HashMap<String, Integer>();
 	
 	static String singleRule = "2-4-5-7-8-9-11-14-15-19-21-23-25-26-27-28-29-31-32-33-35-37-38-43-45" + "";
 	
@@ -21,28 +24,38 @@ public final class RulesValidator {
 								"1-28," +
 								"1-36," +
 								"1-37," +
-								
+								"1-40," + //**
+								"1-43," + //**
+
 								"2-5," +
+								"2-8," + //**
 								"2-11," +
 								"2-26," +
 								"2-29," +
 								"2-35," +
+								"2-38," + //**
+								"2-44," + //**
 								
 								"3-21," +
-								
+								"3-39," +
+								"3-45," +
+
 								"4-7," +
 								"4-12," +
 								"4-13," +
 								"4-22," +
 								"4-31," +
 								"4-33," +
+								"4-40," + //**
 								
 								"5-7," +
 								"5-10," +
 								"5-12," +
 								"5-15," + //**
 								"5-23," +
+								"5-30," + //**
 								"5-32," +
+								"5-41" +
 								
 								"6-33," +
 								"6-28," +
@@ -90,8 +103,10 @@ public final class RulesValidator {
 								"13-26," +
 								"13-31," +
 											
-								"14-5," +
+								"14-5," + //***
 								"14-17," +
+								"14-20," + //***
+								"14-29," + //***
 								"14-34," +
 								"14-35," + //***
 								
@@ -153,12 +168,16 @@ public final class RulesValidator {
 								
 								"33-7," +
 								"33-36," +
-								
+
+								"34-37," +
+
 								"35-32," +
 								"35-6," +
 								
 								"36-7," +
 								"36-9," +
+
+								"38-41," + //**
 								
 								"";
 	
@@ -196,7 +215,6 @@ public final class RulesValidator {
 								"1-45," + //OZ
 								"2-7," + //OZ
 								"3-36," + //OZ
-								"3-45," + //OZ
 								"23-26," + //OZ
 								"";
 
@@ -223,11 +241,15 @@ public final class RulesValidator {
 								"24-25," +
 								"16-17," +
 								"23-24," +
-								
-								"7-12," + //PB
-								"35-38," +//PB
-								"13-36," +//PB
-								"34-37," +//PB
+
+								"7-12," +  //PB
+								"35-38," + //PB
+								"13-36," + //PB
+								"34-37," + //PB
+
+								"1-39," + //PB
+								"3-39," + //PB
+								"3-40," + //PB
 								"";
 									
 	static String slRules =	//SL Most Common Pairs
@@ -308,6 +330,8 @@ public final class RulesValidator {
 								"35-36," +
 								"37-38," +
 								"44-45," +
+
+								"6-42," +
 								"";
 
 	static String sflRules =	//SFL Most Common Pairs
@@ -339,6 +363,7 @@ public final class RulesValidator {
 								"10-11," +
 								"11-12," +
 								"21-22," +
+
 								"";
 	
 	public static void loadRules() {
@@ -405,12 +430,17 @@ public final class RulesValidator {
 	public static boolean validateRules(List<ArrayList<Integer>> lines, List<ArrayList<Integer>> validLines) {
 		for(int j = 0; j < lines.size(); j++){
 			ArrayList<Integer> line = lines.get(j);
-			
+
+			appliedSingleRules = new ArrayList<Integer>();
 			boolean validSingleRule = validateSingleRules(line);
-			
+
+			appliedMultiRules = new ArrayList<ArrayList<Integer>>();
 			boolean validMultiRule = validateMultiRules(line);
 			
-			if(validSingleRule && validMultiRule) {
+			if((validSingleRule && validMultiRule) || checkCombinedRuleSize()) {
+				addAppliedSingleRuleToMap();
+				addAppliedMultiRuleToMap();
+
 				validLines.add(line);
 				if(validLines.size() == playType.getRequiredLines()) {
 					return true;
@@ -423,11 +453,45 @@ public final class RulesValidator {
 		}
 		return false;
 	}
-	
+
+	public static boolean checkCombinedRuleSize() {
+		if((appliedSingleRules.size() > 0 && appliedSingleRules.size() <= playType.getMaxSingleRuleCount()) &&
+				(appliedMultiRules.size() > 0 && appliedMultiRules.size() <= playType.getMaxMultiRuleCount())) {
+			int totalRuleSize = appliedSingleRules.size() + appliedMultiRules.size();
+			if(totalRuleSize >= playType.getMaxTotalRuleCount()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static void addAppliedSingleRuleToMap() {
+		for(Integer rule : appliedSingleRules) {
+			if(appliedSingleRuleMap.containsKey(rule.toString())) {
+				appliedSingleRuleMap.put(rule.toString(), appliedSingleRuleMap.get(rule.toString()) + 1);
+			} else {
+				appliedSingleRuleMap.put(rule.toString(), 1);
+			}
+		}
+	}
+
+	public static void addAppliedMultiRuleToMap() {
+		for(ArrayList<Integer> rule : appliedMultiRules) {
+			if(appliedMultiRuleMap.containsKey(rule.toString())) {
+				appliedMultiRuleMap.put(rule.toString(), appliedMultiRuleMap.get(rule.toString()) + 1);
+			} else {
+				appliedMultiRuleMap.put(rule.toString(), 1);
+			}
+		}
+	}
+
 	public static boolean validateSingleRules(ArrayList<Integer> line) {
 		int passedRuleCount = 0;
+
 		for(Integer number : line) {
 			if(singleRules.contains(number)) {
+				appliedSingleRules.add(number);
 				passedRuleCount++;
 			}
 		}
@@ -443,10 +507,11 @@ public final class RulesValidator {
 	
 	public static boolean validateMultiRules(ArrayList<Integer> line) {
 		float passedRuleCount = 0;
-		
+
 		for(int i = 0; i < multiRules.size(); i++){
 			ArrayList<Integer> rule = multiRules.get(i);
 			if(lineContainsRule(line, rule)) {
+				appliedMultiRules.add(rule);
 				passedRuleCount++;
 			}
 		}
