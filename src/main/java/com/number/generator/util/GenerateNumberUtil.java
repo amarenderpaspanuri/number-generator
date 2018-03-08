@@ -7,6 +7,8 @@ import java.util.Random;
 
 import com.number.generator.type.PlayType;
 import static com.number.generator.util.NumberOccuranceValidator.getNumberOccurances;
+import static com.number.generator.util.RulesValidator.appliedSingleRuleMap;
+import static com.number.generator.util.RulesValidator.appliedMultiRuleMap;
 
 public final class GenerateNumberUtil {
 
@@ -39,9 +41,16 @@ public final class GenerateNumberUtil {
 		System.out.println("Total raw Lines : " + rawLinesCount);
 		System.out.println("Required Lines : " + playType.getRequiredLines());
 		System.out.println("Generated Lines : " + validLines.size());
+		System.out.println("------------------------------------------------------------------");
 		System.out.println("Valid Number Occurances : ");
 		System.out.println(getNumberOccurances(validLines));
 		System.out.println("Rule Occurances : ");
 		System.out.println(rulesMap);
+		System.out.println("------------------------------------------------------------------");
+		System.out.println("Rules Applied:");
+		System.out.println("Single Rules Applied : ");
+		System.out.println(appliedSingleRuleMap);
+		System.out.println("Multi Rules Applied : ");
+		System.out.println(appliedMultiRuleMap);
 	}
 }
