@@ -1,10 +1,10 @@
 package com.number.generator;
 
 import static com.number.generator.util.GenerateNumberUtil.generateLines;
-import static com.number.generator.util.NumberOccuranceValidator.validateOccurances;
-import static com.number.generator.util.RulesValidator.getRuleOccurances;
-import static com.number.generator.util.RulesValidator.loadRules;
-import static com.number.generator.util.RulesValidator.validateRules;
+import static com.number.generator.validator.NumberOccuranceValidator.validateOccurances;
+import static com.number.generator.validator.RulesValidator.getRuleOccurances;
+import static com.number.generator.validator.RulesValidator.loadRules;
+import static com.number.generator.validator.RulesValidator.validateRules;
 import static com.number.generator.util.GenerateNumberUtil.getLinesRequired;
 
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ import java.util.List;
 import com.number.generator.type.PlayType;
 import com.number.generator.util.ColumnNumbers;
 import com.number.generator.util.GenerateNumberUtil;
-import com.number.generator.util.NumberOccuranceValidator;
+import com.number.generator.validator.NumberOccuranceValidator;
 import com.number.generator.util.RowNumbers;
-import com.number.generator.util.RulesValidator;
+import com.number.generator.validator.RulesValidator;
 
 public class NumberGenerator2 {
 
@@ -25,7 +25,7 @@ public class NumberGenerator2 {
 	public static void main(String[] args) {
 		int rawLineCount = 0;
 		int numberOfAttempts = 0;
-		PlayType playType = PlayType.SL;
+		PlayType playType = PlayType.PB;
 		
 		initPlayType(playType);
 		
@@ -92,8 +92,18 @@ public class NumberGenerator2 {
 	public static List<ArrayList<Integer>> getTestLines() {
 		List<ArrayList<Integer>> testLines = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> testLine = new ArrayList<Integer>();
-		testLine.addAll(Arrays.asList(new Integer[]{17, 27, 1, 22, 10, 5, 8, 2}));
+		testLine.addAll(Arrays.asList(new Integer[]{29,37,34,12,28,35,7}));
 		testLines.add(testLine);
 		return testLines;
 	}
 }
+
+
+
+
+
+
+
+
+
+

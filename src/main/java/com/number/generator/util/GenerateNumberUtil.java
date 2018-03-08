@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import com.number.generator.type.PlayType;
-import static com.number.generator.util.NumberOccuranceValidator.getNumberOccurances;
-import static com.number.generator.util.RulesValidator.appliedSingleRuleMap;
-import static com.number.generator.util.RulesValidator.appliedMultiRuleMap;
+
+import static com.number.generator.validator.NumberOccuranceValidator.getNumberOccurances;
+import static com.number.generator.validator.RulesValidator.appliedMultiRuleMap;
+import static com.number.generator.validator.RulesValidator.appliedSingleRuleMap;
 
 public final class GenerateNumberUtil {
 

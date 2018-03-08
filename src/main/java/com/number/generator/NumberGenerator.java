@@ -1,10 +1,10 @@
 package com.number.generator;
 
 import static com.number.generator.util.GenerateNumberUtil.generateLines;
-import static com.number.generator.util.NumberOccuranceValidator.validateOccurances;
-import static com.number.generator.util.RulesValidator.getRuleOccurances;
-import static com.number.generator.util.RulesValidator.loadRules;
-import static com.number.generator.util.RulesValidator.validateRules;
+import static com.number.generator.validator.NumberOccuranceValidator.validateOccurances;
+import static com.number.generator.validator.RulesValidator.getRuleOccurances;
+import static com.number.generator.validator.RulesValidator.loadRules;
+import static com.number.generator.validator.RulesValidator.validateRules;
 import static com.number.generator.util.GenerateNumberUtil.getLinesRequired;
 
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ import java.util.List;
 import com.number.generator.type.PlayType;
 import com.number.generator.util.ColumnNumbers;
 import com.number.generator.util.GenerateNumberUtil;
-import com.number.generator.util.NumberOccuranceValidator;
 import com.number.generator.util.RowNumbers;
-import com.number.generator.util.RulesValidator;
+import com.number.generator.validator.NumberOccuranceValidator;
+import com.number.generator.validator.RulesValidator;
 
-public class NumberGenerator2 {
+public class NumberGenerator {
 
 	public static boolean testMode = false;
 	public static void main(String[] args) {
