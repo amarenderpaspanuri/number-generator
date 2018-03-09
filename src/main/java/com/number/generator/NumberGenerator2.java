@@ -47,26 +47,28 @@ public class NumberGenerator2 {
 			rawLineCount += rawLines.size();
 			
 			numberOfTotalAttempts++;
-			
+
+			List<ArrayList<Integer>> requiredRawLines;
 			boolean isOccuranceValid = false;
 			if(testMode) {
 				isOccuranceValid = true;
-				rawLines = getTestLines();
+				requiredRawLines = getTestLines();
 			} else {
-				rawLines = getLinesRequired(rawLines);
-				isOccuranceValid = validateOccurances(rawLines);
+				requiredRawLines = getLinesRequired(rawLines);
+				isOccuranceValid = validateOccurances(requiredRawLines);
 				System.out.print("* ");
 			}
 			
 			if(isOccuranceValid) {
 				numberOfValidOccuranceAttempts++;
 				//System.out.print("OV ");
-				boolean isRulesValid = validateRules(rawLines, validLines);
+				boolean isRulesValid = validateRules(requiredRawLines, validLines);
 				if(isRulesValid) {
 					numberOfValidRuleAttempts++;
 					//System.out.print("RV ");
 					System.out.println();
 					generateLines(rawLineCount, validLines);
+					System.out.println("Raw lines per attempt: " + rawLines.size());
 					System.out.println("Total number of raw attempts: " + numberOfTotalAttempts);
 					System.out.println("Total number of valid occurances attempts: " + numberOfValidOccuranceAttempts);
 					System.out.println("Total number of valid rule attempts: " + numberOfValidRuleAttempts);
