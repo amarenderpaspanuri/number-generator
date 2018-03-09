@@ -1,9 +1,6 @@
 package com.number.generator.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import com.number.generator.type.PlayType;
 
@@ -33,25 +30,37 @@ public final class GenerateNumberUtil {
 		return lines;
 	}
 	
-	public static void generateLines(int rawLinesCount, List<ArrayList<Integer>> validLines, HashMap<Integer, Integer> rulesMap) {
+	public static void generateLines(int rawLinesCount, List<ArrayList<Integer>> validLines) {
 		
 		for(ArrayList<Integer> line : validLines) {
 			System.out.println(line);
 		}
-		
-		System.out.println("Total raw Lines : " + rawLinesCount);
-		System.out.println("Required Lines : " + playType.getRequiredLines());
-		System.out.println("Generated Lines : " + validLines.size());
-		System.out.println("------------------------------------------------------------------");
-		System.out.println("Valid Number Occurances : ");
+
+		System.out.println();
+		System.out.println("-----------------------------------------Statistics--------------------------------------------------------------------------------------------------");
+		System.out.println("Total raw lines: " + rawLinesCount);
+		System.out.println("Required lines: " + playType.getRequiredLines());
+		System.out.println("Generated valid lines: " + validLines.size());
+		System.out.println("Total valid single rules applied: " + getFinalRuleCount(appliedSingleRuleMap));
+		System.out.println("Total valid multi rules applied: " + getFinalRuleCount(appliedMultiRuleMap));
+		System.out.println();
+		System.out.println("-----------------------------------------Valid Line and Rule Occurances----------------------------------------------------------------------------------");
+		System.out.println("Valid number occurances: ");
 		System.out.println(getNumberOccurances(validLines));
-		System.out.println("Rule Occurances : ");
-		System.out.println(rulesMap);
-		System.out.println("------------------------------------------------------------------");
-		System.out.println("Rules Applied:");
-		System.out.println("Single Rules Applied : ");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("Valid single rules applied details: ");
 		System.out.println(appliedSingleRuleMap);
-		System.out.println("Multi Rules Applied : ");
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("Valid multi rules applied details: ");
 		System.out.println(appliedMultiRuleMap);
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+	}
+
+	public static int getFinalRuleCount(HashMap<String, Integer> map) {
+		int totalRuleCount = 0;
+		for(Map.Entry<String, Integer> entry : map.entrySet()) {
+			totalRuleCount += entry.getValue();
+		}
+		return totalRuleCount;
 	}
 }
