@@ -24,14 +24,16 @@ public class NumberGenerator2 {
 	public static boolean testMode = false;
 	public static void main(String[] args) {
 		int rawLineCount = 0;
-		int numberOfAttempts = 0;
-		PlayType playType = PlayType.PB;
+		int numberOfTotalAttempts = 0;
+		int numberOfValidOccuranceAttempts = 0;
+		int numberOfValidRuleAttempts = 0;
+		PlayType playType = PlayType.SFL;
 		
 		initPlayType(playType);
 		
 		loadRules();
 		
-		HashMap<Integer, Integer> rulesMap = getRuleOccurances(RulesValidator.multiRules);
+		//HashMap<Integer, Integer> rulesMap = getRuleOccurances(RulesValidator.multiRules);
 		List<ArrayList<Integer>> validLines = new ArrayList<ArrayList<Integer>>();
 		while(true) {
 			List<ArrayList<Integer>> rawLines = new ArrayList<ArrayList<Integer>>();
@@ -44,7 +46,7 @@ public class NumberGenerator2 {
 			
 			rawLineCount += rawLines.size();
 			
-			numberOfAttempts++;
+			numberOfTotalAttempts++;
 			
 			boolean isOccuranceValid = false;
 			if(testMode) {
@@ -53,17 +55,21 @@ public class NumberGenerator2 {
 			} else {
 				rawLines = getLinesRequired(rawLines);
 				isOccuranceValid = validateOccurances(rawLines);
-				System.out.print(". ");
+				System.out.print("* ");
 			}
 			
 			if(isOccuranceValid) {
-				System.out.print("OV ");
+				numberOfValidOccuranceAttempts++;
+				//System.out.print("OV ");
 				boolean isRulesValid = validateRules(rawLines, validLines);
 				if(isRulesValid) {
-					System.out.print("RV ");
+					numberOfValidRuleAttempts++;
+					//System.out.print("RV ");
 					System.out.println();
-					generateLines(rawLineCount, validLines, rulesMap);
-					System.out.println("Number of attempts: " + numberOfAttempts);
+					generateLines(rawLineCount, validLines);
+					System.out.println("Total number of raw attempts: " + numberOfTotalAttempts);
+					System.out.println("Total number of valid occurances attempts: " + numberOfValidOccuranceAttempts);
+					System.out.println("Total number of valid rule attempts: " + numberOfValidRuleAttempts);
 					break;
 				}
 			}
@@ -92,7 +98,7 @@ public class NumberGenerator2 {
 	public static List<ArrayList<Integer>> getTestLines() {
 		List<ArrayList<Integer>> testLines = new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> testLine = new ArrayList<Integer>();
-		testLine.addAll(Arrays.asList(new Integer[]{29,37,34,12,28,35,7}));
+		testLine.addAll(Arrays.asList(new Integer[]{26,10,35,33,37,3,24,2}));
 		testLines.add(testLine);
 		return testLines;
 	}
