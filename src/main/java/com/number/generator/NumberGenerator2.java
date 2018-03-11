@@ -2,14 +2,12 @@ package com.number.generator;
 
 import static com.number.generator.util.GenerateNumberUtil.generateLines;
 import static com.number.generator.validator.NumberOccuranceValidator.validateOccurances;
-import static com.number.generator.validator.RulesValidator.getRuleOccurances;
 import static com.number.generator.validator.RulesValidator.loadRules;
 import static com.number.generator.validator.RulesValidator.validateRules;
 import static com.number.generator.util.GenerateNumberUtil.getLinesRequired;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import com.number.generator.type.PlayType;
@@ -21,13 +19,30 @@ import com.number.generator.validator.RulesValidator;
 
 public class NumberGenerator2 {
 
+	public static PlayType playType = PlayType.OZ;
 	public static boolean testMode = false;
+	public static boolean isOccuranceValid = false;
+	public static Integer[] testLine = new Integer[]{4, 15, 37, 27, 35, 29, 31, 36};
+	
+	public static void setMode() {
+		testMode = true;
+		playType = PlayType.SFL;
+		
+		if(testMode) {
+			playType.setRequiredLines(1);
+			playType.setRepetitions(0);
+		} else {
+			playType.setRequiredLines(50);
+			playType.setRepetitions(1);
+		}
+	}
 	public static void main(String[] args) {
+		setMode();
+		
 		int rawLineCount = 0;
 		int numberOfTotalAttempts = 0;
 		int numberOfValidOccuranceAttempts = 0;
 		int numberOfValidRuleAttempts = 0;
-		PlayType playType = PlayType.SFL;
 		
 		initPlayType(playType);
 		
@@ -44,12 +59,11 @@ public class NumberGenerator2 {
 			ColumnNumbers.rawLines = rawLines;
 			ColumnNumbers.generate_column_numbers();
 			
-			rawLineCount += rawLines.size();
+			rawLineCount += rawLines.size();	
 			
 			numberOfTotalAttempts++;
 
 			List<ArrayList<Integer>> requiredRawLines;
-			boolean isOccuranceValid = false;
 			if(testMode) {
 				isOccuranceValid = true;
 				requiredRawLines = getTestLines();
@@ -68,6 +82,7 @@ public class NumberGenerator2 {
 					//System.out.print("RV ");
 					System.out.println();
 					generateLines(rawLineCount, validLines);
+					System.out.println("Play type: " + playType.getValue());
 					System.out.println("Raw lines per attempt: " + rawLines.size());
 					System.out.println("Total number of raw attempts: " + numberOfTotalAttempts);
 					System.out.println("Total number of valid occurances attempts: " + numberOfValidOccuranceAttempts);
@@ -99,9 +114,9 @@ public class NumberGenerator2 {
 	
 	public static List<ArrayList<Integer>> getTestLines() {
 		List<ArrayList<Integer>> testLines = new ArrayList<ArrayList<Integer>>();
-		ArrayList<Integer> testLine = new ArrayList<Integer>();
-		testLine.addAll(Arrays.asList(new Integer[]{26,10,35,33,37,3,24,2}));
-		testLines.add(testLine);
+		/*ArrayList<Integer> testLine = new ArrayList<Integer>();
+		testLine.add(Arrays.asList(testLine));*/
+		testLines.add(new ArrayList<Integer>(Arrays.asList(testLine)));
 		return testLines;
 	}
 }

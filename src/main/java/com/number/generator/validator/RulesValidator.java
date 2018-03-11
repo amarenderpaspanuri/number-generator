@@ -8,8 +8,8 @@ public final class RulesValidator {
 	
 	public static PlayType playType;
 	
-	public static List<Integer> singleRules;
-	public static List<ArrayList<Integer>> multiRules;
+	public static List<Integer> rawSingleRules;
+	public static List<ArrayList<Integer>> rawMultiRules;
 
 	public static List<Integer> appliedSingleRules = new ArrayList<Integer>();
 	public static List<ArrayList<Integer>> appliedMultiRules = new ArrayList<ArrayList<Integer>>();
@@ -374,8 +374,8 @@ public final class RulesValidator {
 								"";
 	
 	public static void loadRules() {
-		singleRules = loadSingleRules();
-		multiRules = loadMultiRules();
+		rawSingleRules = loadSingleRules();
+		rawMultiRules = loadMultiRules();
 	}
 	
 	public static List<Integer> loadSingleRules() {
@@ -497,7 +497,7 @@ public final class RulesValidator {
 		int passedRuleCount = 0;
 
 		for(Integer number : line) {
-			if(singleRules.contains(number)) {
+			if(rawSingleRules.contains(number)) {
 				appliedSingleRules.add(number);
 				passedRuleCount++;
 			}
@@ -515,8 +515,8 @@ public final class RulesValidator {
 	public static boolean validateMultiRules(ArrayList<Integer> line) {
 		float passedRuleCount = 0;
 
-		for(int i = 0; i < multiRules.size(); i++){
-			ArrayList<Integer> rule = multiRules.get(i);
+		for(int i = 0; i < rawMultiRules.size(); i++){
+			ArrayList<Integer> rule = rawMultiRules.get(i);
 			if(lineContainsRule(line, rule)) {
 				appliedMultiRules.add(rule);
 				passedRuleCount++;
@@ -561,14 +561,14 @@ public final class RulesValidator {
 		
 		loadRules();
 		
-		System.out.println("Total Rules Size : " + (singleRules.size() + multiRules.size()));
+		System.out.println("Total Rules Size : " + (rawSingleRules.size() + rawMultiRules.size()));
 		
-		System.out.println("Single Rules Size : " + singleRules.size());
+		System.out.println("Single Rules Size : " + rawSingleRules.size());
 		System.out.println("Single Rule Number Occurances : ");
-		System.out.println(singleRules);
+		System.out.println(rawSingleRules);
 		
-		HashMap<Integer, Integer> rulesMap = getRuleOccurances(multiRules);
-		System.out.println("Multi Rules Size: " + multiRules.size());
+		HashMap<Integer, Integer> rulesMap = getRuleOccurances(rawMultiRules);
+		System.out.println("Multi Rules Size: " + rawMultiRules.size());
 		System.out.println("Multi Rule Number Occurances : ");
 		System.out.println(rulesMap);
 	}

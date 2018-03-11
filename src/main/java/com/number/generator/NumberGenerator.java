@@ -31,7 +31,7 @@ public class NumberGenerator {
 		
 		loadRules();
 		
-		HashMap<Integer, Integer> rulesMap = getRuleOccurances(RulesValidator.multiRules);
+		HashMap<Integer, Integer> rulesMap = getRuleOccurances(RulesValidator.rawMultiRules);
 		List<ArrayList<Integer>> validLines = new ArrayList<ArrayList<Integer>>();
 		while(true) {
 			List<ArrayList<Integer>> rawLines = new ArrayList<ArrayList<Integer>>();
@@ -62,7 +62,7 @@ public class NumberGenerator {
 				if(isRulesValid) {
 					System.out.print("RV ");
 					System.out.println();
-					generateLines(rawLineCount, validLines, rulesMap);
+					generateLines(rawLineCount, validLines);
 					System.out.println("Number of attempts: " + numberOfAttempts);
 					break;
 				}

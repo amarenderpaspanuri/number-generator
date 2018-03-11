@@ -1,12 +1,12 @@
 package com.number.generator.type;
 
 public enum PlayType {
-    OZ("oz",   45, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    PB("pb",   40, 7, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 20, true,  false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    SL("sl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    ML("ml",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    WL("wl",   45, 6, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    SFL("sfl", 37, 8, Constants.LINES_REQUIRED, Constants.NUMBER_OF_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 6, 7);
+    OZ("oz",   45, 7, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
+    PB("pb",   40, 7, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 20, true,  false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
+    SL("sl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
+    ML("ml",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
+    WL("wl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
+    SFL("sfl", 37, 8, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 6, 7);
     
 	private String value;
 	private int numberLimit;
@@ -51,12 +51,7 @@ public enum PlayType {
 		this.maxTotalRuleCount = maxTotalRuleCount;
     }
     
-    public static class Constants {
-        public static final int LINES_REQUIRED = 50;
-        public static final int NUMBER_OF_REPETITIONS = 1;
-    }
-
-	public String getValue() {
+    public String getValue() {
 		return value;
 	}
 
@@ -175,4 +170,9 @@ public enum PlayType {
 	public void setMaxTotalRuleCount(int maxTotalRuleCount) {
 		this.maxTotalRuleCount = maxTotalRuleCount;
 	}
+	
+	public static class Constants {
+        public static final int DEFAULT_LINES = 0;
+        public static final int DEFAULT_REPETITIONS = 1;
+    }
 }
