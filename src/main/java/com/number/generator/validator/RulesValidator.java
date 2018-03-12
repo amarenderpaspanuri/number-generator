@@ -462,13 +462,20 @@ public final class RulesValidator {
 	}
 
 	public static boolean checkCombinedRuleSize() {
-		if((appliedSingleRules.size() > 0 && appliedSingleRules.size() <= playType.getMaxSingleRuleCount()) &&
-				(appliedMultiRules.size() > 0 && appliedMultiRules.size() <= playType.getMaxMultiRuleCount())) {
+		if(appliedSingleRules.size() > 0 && appliedMultiRules.size() > 0 ) {
 			int totalRuleSize = appliedSingleRules.size() + appliedMultiRules.size();
-			if(totalRuleSize >= playType.getMaxTotalRuleCount()) {
+			if(totalRuleSize >= playType.getMinTotalRuleCount()) {
 				return true;
 			}
 		}
+
+		/*if((appliedSingleRules.size() > 0 && appliedSingleRules.size() <= playType.getMaxSingleRuleCount()) &&
+				(appliedMultiRules.size() > 0 && appliedMultiRules.size() <= playType.getMaxMultiRuleCount())) {
+			int totalRuleSize = appliedSingleRules.size() + appliedMultiRules.size();
+			if(totalRuleSize >= playType.getMinTotalRuleCount()) {
+				return true;
+			}
+		}*/
 
 		return false;
 	}
