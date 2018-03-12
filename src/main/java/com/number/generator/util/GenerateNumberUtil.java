@@ -43,6 +43,7 @@ public final class GenerateNumberUtil {
 		System.out.println("Total raw lines: " + rawLinesCount);
 		System.out.println("Required lines: " + playType.getRequiredLines());
 		System.out.println("Generated valid lines: " + validLines.size());
+		System.out.println("Total valid numbers: " + validLines.size() * playType.getNumbersPerLine());
 		System.out.println("Total valid single rules applied: " + getFinalRuleCount(appliedSingleRuleMap));
 		System.out.println("Total valid multi rules applied: " + getFinalRuleCount(appliedMultiRuleMap));
 		System.out.println();
