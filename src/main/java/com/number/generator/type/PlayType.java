@@ -6,7 +6,7 @@ public enum PlayType {
     SL("sl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
     ML("ml",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
     WL("wl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    SFL("sfl", 37, 8, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 6, 7);
+    SFL("sfl", 37, 8, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 6, 6);
     
 	private String value;
 	private int numberLimit;
@@ -26,14 +26,14 @@ public enum PlayType {
 	private int minMultiRuleCount;
 	private int maxMultiRuleCount;
 
-	private int maxTotalRuleCount;
+	private int minTotalRuleCount;
 	
     PlayType(String value, int numberLimit, int numbersPerLine, int requiredLines, int repetitions,
     		int supplementaryNumberLimit, boolean supplemantaryRequired, boolean duplicatesAllowed, 
     		float minNumberOccuranceFactor, float maxNumberOccuranceFactor, 
     		int minSingleRuleCount, int maxSingleRuleCount,
     		int minMultiRuleCount, int maxMultiRuleCount,
-			 int maxTotalRuleCount) {
+			 int minTotalRuleCount) {
     	this.value = value;
     	this.numberLimit = numberLimit;
     	this.numbersPerLine = numbersPerLine;
@@ -48,7 +48,7 @@ public enum PlayType {
     	this.maxSingleRuleCount = maxSingleRuleCount;
     	this.minMultiRuleCount = minMultiRuleCount;
     	this.maxMultiRuleCount = maxMultiRuleCount;
-		this.maxTotalRuleCount = maxTotalRuleCount;
+		this.minTotalRuleCount = minTotalRuleCount;
     }
     
     public String getValue() {
@@ -163,12 +163,12 @@ public enum PlayType {
 		this.maxMultiRuleCount = maxMultiRuleCount;
 	}
 
-	public int getMaxTotalRuleCount() {
-		return maxTotalRuleCount;
+	public int getMinTotalRuleCount() {
+		return minTotalRuleCount;
 	}
 
-	public void setMaxTotalRuleCount(int maxTotalRuleCount) {
-		this.maxTotalRuleCount = maxTotalRuleCount;
+	public void setMinTotalRuleCount(int minTotalRuleCount) {
+		this.minTotalRuleCount = minTotalRuleCount;
 	}
 	
 	public static class Constants {
