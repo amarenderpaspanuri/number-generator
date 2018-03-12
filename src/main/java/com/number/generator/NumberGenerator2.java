@@ -25,15 +25,15 @@ public class NumberGenerator2 {
 	public static Integer[] testLine = new Integer[]{4, 15, 37, 27, 35, 29, 31, 36};
 	
 	public static void setMode() {
-		testMode = true;
+		testMode = false;
 		playType = PlayType.SFL;
 		
 		if(testMode) {
 			playType.setRequiredLines(1);
 			playType.setRepetitions(0);
 		} else {
-			playType.setRequiredLines(50);
-			playType.setRepetitions(1);
+			playType.setRequiredLines(200);
+			playType.setRepetitions(3);
 		}
 	}
 	public static void main(String[] args) {
