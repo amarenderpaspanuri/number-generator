@@ -381,6 +381,8 @@ public final class RulesValidator {
 	public static List<Integer> loadSingleRules() {
 		List<Integer> rulesList = new ArrayList<Integer>();
 		
+		loadStatisticalSingleRules();
+		
 		String[] numberArray = singleRule.split("-", -1);
 		for(String str : numberArray) {
 			Integer number = Integer.valueOf(str);
@@ -394,7 +396,7 @@ public final class RulesValidator {
 	public static List<ArrayList<Integer>> loadMultiRules() {
 		List<ArrayList<Integer>> rulesList = new ArrayList<ArrayList<Integer>>();
 		
-		String[] rules = loadStatisticalRules().split(",", -1);
+		String[] rules = loadStatisticalMultiRules().split(",", -1);
 		for(String pair : rules) {
 			if(!pair.trim().isEmpty()) {
 				String[] numberArray = pair.split("-", -1);
@@ -417,7 +419,25 @@ public final class RulesValidator {
 		return rulesList;
 	}
 	
-	public static String loadStatisticalRules() {
+	public static String loadStatisticalSingleRules() {
+		if(playType == PlayType.OZ) {
+			singleRule = singleRule + "-1-3-6-20-41";
+		} else if(playType == PlayType.PB) {
+			singleRule = singleRule + "-6-13-17-20-24-34-36";
+		} else if(playType == PlayType.SL) {
+			singleRule = singleRule + "-1-22-36-40-41";
+		} else if(playType == PlayType.SFL) {
+			singleRule = singleRule + "-3-10-13-17";
+		} else if(playType == PlayType.ML) {
+			
+		} else if(playType == PlayType.WL) {
+			
+		}
+		
+		return singleRule;
+	}
+	
+	public static String loadStatisticalMultiRules() {
 		if(playType == PlayType.OZ) {
 			multiRule = multiRule + ozRules;
 		} else if(playType == PlayType.PB) {

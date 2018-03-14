@@ -35,7 +35,8 @@ public final class GenerateNumberUtil {
 	public static void generateLines(StringBuilder sb, int rawLinesCount, List<ArrayList<Integer>> validLines) {
 		
 		for(ArrayList<Integer> line : validLines) {
-			System.out.println(line);
+			sb.append(line);
+			sb.append("\n");
 		}
 
 		//StringBuilder sb = new StringBuilder();

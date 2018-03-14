@@ -26,7 +26,7 @@ public class NumberGenerator2 {
 	
 	public static void setMode() {
 		testMode = false;
-		playType = PlayType.SFL;
+		playType = PlayType.PB;
 		
 		if(testMode) {
 			playType.setRequiredLines(1);
@@ -80,13 +80,17 @@ public class NumberGenerator2 {
 				if(isRulesValid) {
 					numberOfValidRuleAttempts++;
 					//System.out.print("RV ");
-					System.out.println();
-					generateLines(rawLineCount, validLines);
-					System.out.println("Play type: " + playType.getValue());
-					System.out.println("Raw lines per attempt: " + rawLines.size());
-					System.out.println("Total number of raw attempts: " + numberOfTotalAttempts);
-					System.out.println("Total number of valid occurances attempts: " + numberOfValidOccuranceAttempts);
-					System.out.println("Total number of valid rule attempts: " + numberOfValidRuleAttempts);
+					StringBuilder sb = new StringBuilder();
+					sb.append("\n");
+					generateLines(sb, rawLineCount, validLines);
+					sb.append("\n");
+					sb.append("Play type: " + playType.getValue());sb.append("\n");
+					sb.append("Raw lines per attempt: " + rawLines.size());sb.append("\n");
+					sb.append("Total number of raw attempts: " + numberOfTotalAttempts);sb.append("\n");
+					sb.append("Total number of valid occurances attempts: " + numberOfValidOccuranceAttempts);sb.append("\n");
+					sb.append("Total number of valid rule attempts: " + numberOfValidRuleAttempts);sb.append("\n");
+					
+					System.out.print(sb.toString());
 					break;
 				}
 			}
