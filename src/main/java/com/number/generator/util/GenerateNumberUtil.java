@@ -32,37 +32,47 @@ public final class GenerateNumberUtil {
 		return lines;
 	}
 	
-	public static void generateLines(int rawLinesCount, List<ArrayList<Integer>> validLines) {
+	public static void generateLines(StringBuilder sb, int rawLinesCount, List<ArrayList<Integer>> validLines) {
 		
 		for(ArrayList<Integer> line : validLines) {
 			System.out.println(line);
 		}
 
-		System.out.println();
-		System.out.println("-----------------------------------------Statistics--------------------------------------------------------------------------------------------------");
-		System.out.println("Total raw lines: " + rawLinesCount);
-		System.out.println("Required lines: " + playType.getRequiredLines());
-		System.out.println("Generated valid lines: " + validLines.size());
-		System.out.println("Total valid numbers: " + validLines.size() * playType.getNumbersPerLine());
-		System.out.println("Total valid single rules applied: " + getFinalRuleCount(appliedSingleRuleMap));
-		System.out.println("Total valid multi rules applied: " + getFinalRuleCount(appliedMultiRuleMap));
-		System.out.println();
-		System.out.println("-----------------------------------------Valid Line and Rule Occurances----------------------------------------------------------------------------------");
-		System.out.println("Valid number occurances details: ");
+		//StringBuilder sb = new StringBuilder();
+		sb.append("\n");
+
+		sb.append("-----------------------------------------Statistics--------------------------------------------------------------------------------------------------");
+		sb.append("\n");
+		sb.append("Total raw lines: " + rawLinesCount);sb.append("\n");
+		sb.append("Required lines: " + playType.getRequiredLines());sb.append("\n");
+		sb.append("Generated valid lines: " + validLines.size());sb.append("\n");
+		sb.append("Total valid numbers: " + validLines.size() * playType.getNumbersPerLine());sb.append("\n");
+		sb.append("Total valid single rules applied: " + getFinalRuleCount(appliedSingleRuleMap));sb.append("\n");
+		sb.append("Total valid multi rules applied: " + getFinalRuleCount(appliedMultiRuleMap));sb.append("\n");
+		sb.append("\n");
+		sb.append("-----------------------------------------Valid Line and Rule Occurances----------------------------------------------------------------------------------");
+		sb.append("\n");
+		sb.append("Valid number occurances details: ");sb.append("\n");
 		HashMap<Integer, Integer> map = getNumberOccurances(validLines);
-		printNumberOccuranceStats(map, validLines.size());
-		System.out.println(map);
-		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("Valid single rules applied details: ");
-		printRuleStats(appliedSingleRuleMap, rawSingleRules.size());
-		System.out.println("Applied single rules: ");
-		System.out.println(appliedSingleRuleMap);
-		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
-		System.out.println("Valid multi rules applied details: ");
-		printRuleStats(appliedMultiRuleMap, rawMultiRules.size());
-		System.out.println("Applied multi rules: ");
-		System.out.println(appliedMultiRuleMap);
-		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+		printNumberOccuranceStats(sb, map, validLines.size());
+		sb.append(map);
+		sb.append("\n");
+		sb.append("-------------------------------------------------------------------------------------------------------------------------------------------");
+		sb.append("\n");
+		sb.append("Valid single rules applied details: ");sb.append("\n");
+		printRuleStats(sb, appliedSingleRuleMap, rawSingleRules.size());
+		sb.append("Applied single rules: ");sb.append("\n");
+		sb.append(appliedSingleRuleMap);
+		sb.append("\n");
+		sb.append("-------------------------------------------------------------------------------------------------------------------------------------------");
+		sb.append("\n");
+		sb.append("Valid multi rules applied details: ");sb.append("\n");
+		printRuleStats(sb, appliedMultiRuleMap, rawMultiRules.size());
+		sb.append("Applied multi rules: ");sb.append("\n");
+		sb.append(appliedMultiRuleMap);sb.append("\n");
+		sb.append("-------------------------------------------------------------------------------------------------------------------------------------------");
+
+		//System.out.println(sb.toString());
 	}
 
 	public static int getFinalRuleCount(HashMap<String, Integer> map) {
@@ -73,7 +83,7 @@ public final class GenerateNumberUtil {
 		return totalRuleCount;
 	}
 	
-	public static void printNumberOccuranceStats(HashMap<Integer, Integer> map, int validLineCount) {
+	public static void printNumberOccuranceStats(StringBuilder sb, HashMap<Integer, Integer> map, int validLineCount) {
 		int lowestNumber = 0;
 		int highestNumber = 0;
 		int lowestNumberCount = 0;
@@ -95,14 +105,15 @@ public final class GenerateNumberUtil {
 				}
 			}
 		}
-		System.out.println("Lowest number frequency:" + lowestNumber + "=" +lowestNumberCount);
-		System.out.println("Highest number frequency:" + highestNumber + "=" +highestNumberCount);
-		System.out.println("Max number limit for play:" + playType.getNumberLimit());
-		System.out.println("Missed numbers:" + (playType.getNumberLimit()-map.size()));
-		System.out.println("Percentage of number occurance:" + ((map.size()*100)/playType.getNumberLimit()) + "%");
+		sb.append("\n");
+		sb.append("Lowest number frequency:" + lowestNumber + "=" +lowestNumberCount);sb.append("\n");
+		sb.append("Highest number frequency:" + highestNumber + "=" +highestNumberCount);sb.append("\n");
+		sb.append("Max number limit for play:" + playType.getNumberLimit());sb.append("\n");
+		sb.append("Missed numbers:" + (playType.getNumberLimit()-map.size()));sb.append("\n");
+		sb.append("Percentage of number occurance:" + ((map.size()*100)/playType.getNumberLimit()) + "%");sb.append("\n");
 		
 	}
-	public static void printRuleStats(HashMap<String, Integer> map, int rawRuleCount) {
+	public static void printRuleStats(StringBuilder sb, HashMap<String, Integer> map, int rawRuleCount) {
 		String lowestRule = "";
 		String highestRule = "";
 		int lowestRuleCount = 0;
@@ -124,12 +135,13 @@ public final class GenerateNumberUtil {
 				}
 			}
 		}
-		System.out.println("Lowest rule count:" + lowestRule + "=" +lowestRuleCount);
-		System.out.println("Highest rule count:" + highestRule + "=" +highestRuleCount);
-		System.out.println("Raw rule count:" + rawRuleCount);
-		System.out.println("Missed rule count:" + (rawRuleCount-map.size()));
-		System.out.println("Applied rule count:" + map.size());
-		System.out.println("Percentage of rules applied:" + ((map.size()*100)/rawRuleCount) + "%");
+		sb.append("\n");
+		sb.append("Lowest rule count:" + lowestRule + "=" +lowestRuleCount);sb.append("\n");
+		sb.append("Highest rule count:" + highestRule + "=" +highestRuleCount);sb.append("\n");
+		sb.append("Raw rule count:" + rawRuleCount);sb.append("\n");
+		sb.append("Missed rule count:" + (rawRuleCount-map.size()));sb.append("\n");
+		sb.append("Applied rule count:" + map.size());sb.append("\n");
+		sb.append("Percentage of rules applied:" + ((map.size()*100)/rawRuleCount) + "%");sb.append("\n");
 		
 	}
 }
