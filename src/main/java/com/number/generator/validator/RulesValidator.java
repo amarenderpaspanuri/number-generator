@@ -17,7 +17,7 @@ public final class RulesValidator {
 	public static HashMap<String, Integer> appliedSingleRuleMap = new HashMap<String, Integer>();
 	public static HashMap<String, Integer> appliedMultiRuleMap = new HashMap<String, Integer>();
 	
-	static String singleRule = "2-4-5-7-8-9-11-14-15-19-21-23-25-26-27-28-29-31-32-33-35-37-38-43-45" + "";
+	static String singleRule = "2-4-5-7-8-9-11-15-19-23-26-28-29-31-32-33-35-37-38-40-43-45" + ""; //20
 	
 	static String multiRule =   "1-10," +
 								"1-19," +
@@ -361,7 +361,7 @@ public final class RulesValidator {
 								"10-5-9," +
 									
 								//SFL Most Common Consecutive Pairs
-								//"27-28," +
+								"27-28," +
 								"3-4," +
 								//"32-33," +
 								"19-20," +

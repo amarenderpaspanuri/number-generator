@@ -1,12 +1,30 @@
 package com.number.generator.type;
 
 public enum PlayType {
-    OZ("oz",   45, 7, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    PB("pb",   40, 7, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 20, true,  false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    SL("sl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    ML("ml",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    WL("wl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6),
-    SFL("sfl", 37, 8, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 6, 6);
+    OZ("oz",   45, 7, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6,
+    		"1-13-16-27-42-20",
+    		"1-16, 14-37, 1-36, 11-13, 13-21",
+    		"16-17-21, 5-25-34, 28-32-40, 7-10-28, 17-22-26"),
+    PB("pb",   40, 7, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 20, true,  false, 0.7f, 1.4f, 3, 5, 3, 5, 6,
+    		"",
+    		"",
+    		""),
+    SL("sl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6,
+    		"",
+    		"",
+    		""),
+    ML("ml",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6,
+    		"",
+    		"",
+    		""),
+    WL("wl",   45, 6, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 5, 3, 5, 6,
+    		"",
+    		"",
+    		""),
+    SFL("sfl", 37, 8, Constants.DEFAULT_LINES, Constants.DEFAULT_REPETITIONS, 0,  false, false, 0.7f, 1.4f, 3, 6, 4, 6, 6,
+    		"",
+    		"",
+    		"");
     
 	private String value;
 	private int numberLimit;
@@ -28,12 +46,17 @@ public enum PlayType {
 
 	private int minTotalRuleCount;
 	
+	private String singles;
+	private String doubles;
+	private String triples;
+	
     PlayType(String value, int numberLimit, int numbersPerLine, int requiredLines, int repetitions,
     		int supplementaryNumberLimit, boolean supplemantaryRequired, boolean duplicatesAllowed, 
     		float minNumberOccuranceFactor, float maxNumberOccuranceFactor, 
     		int minSingleRuleCount, int maxSingleRuleCount,
     		int minMultiRuleCount, int maxMultiRuleCount,
-			 int minTotalRuleCount) {
+			 int minTotalRuleCount,
+			 String singles, String doubles, String triples) {
     	this.value = value;
     	this.numberLimit = numberLimit;
     	this.numbersPerLine = numbersPerLine;
@@ -49,6 +72,10 @@ public enum PlayType {
     	this.minMultiRuleCount = minMultiRuleCount;
     	this.maxMultiRuleCount = maxMultiRuleCount;
 		this.minTotalRuleCount = minTotalRuleCount;
+		
+		this.singles = singles;
+		this.doubles = doubles;
+		this.triples = triples;
     }
     
     public String getValue() {
@@ -175,4 +202,28 @@ public enum PlayType {
         public static final int DEFAULT_LINES = 0;
         public static final int DEFAULT_REPETITIONS = 1;
     }
+
+	public String getSingles() {
+		return singles;
+	}
+
+	public void setSingles(String singles) {
+		this.singles = singles;
+	}
+
+	public String getDoubles() {
+		return doubles;
+	}
+
+	public void setDoubles(String doubles) {
+		this.doubles = doubles;
+	}
+
+	public String getTriples() {
+		return triples;
+	}
+
+	public void setTriples(String triples) {
+		this.triples = triples;
+	}
 }
