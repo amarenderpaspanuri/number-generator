@@ -1,10 +1,10 @@
 package com.number.generator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.number.generator.comparator.NumberComparator;
+import com.number.generator.dto.RandomNumber;
 import com.number.generator.type.PlayType_Latest;
 
 public class NumberGenerator_Latest {
@@ -22,24 +22,25 @@ public class NumberGenerator_Latest {
 		for(ArrayList<Integer> line : lines) {
 			List<Integer> numbers = new ArrayList<Integer>();
 			for(Integer number : line) {
-				
+				if(number == 32) {
+					String test = "";
+				}
 				List<Integer> ruleNumbers = RuleNumberGenerator.getNumbers(number);
 				if(ruleNumbers != null && !ruleNumbers.isEmpty()) {
-					numbers.addAll(ruleNumbers);
+					addNumbers(line, numbers, ruleNumbers);
 				}
-				
 				
 				//Multiples
 				List<Integer> multipleNumbers = getMultiples(number);
 				if(!multipleNumbers.isEmpty()) {
-					addNumbers(numbers, multipleNumbers);
+					addNumbers(line, numbers, multipleNumbers);
 				}
 				
 				//Adds With
 				Integer addsWithNumber = getAddsWith(number);
 				List<Integer> addsWithNumbers = getAddsWithNumbers(addsWithNumber);
 				if(!addsWithNumbers.isEmpty()) {
-					addNumbers(numbers, addsWithNumbers);
+					addNumbers(line, numbers, addsWithNumbers);
 				}
 				
 				
@@ -47,16 +48,21 @@ public class NumberGenerator_Latest {
 				Integer endsWithNumber = getEndsWith(number);
 				List<Integer> endsWithNumbers = getEndsWithNumbers(endsWithNumber);
 				if(!endsWithNumbers.isEmpty()) {
-					addNumbers(numbers, endsWithNumbers);
+					addNumbers(line, numbers, endsWithNumbers);
 				}
 			}
-			
+
+			List<Integer> lineCopy = getListCopy(line);
 			Random random = new Random();
 			while(line.size() < playType.getNumbersPerLine()) {
 				int index = random.nextInt(numbers.size());
 				Integer number = numbers.get(index);
 				if(!line.contains(number)) {
 					line.add(number);
+				}
+
+				if(getNumberSequenceCount(line) > 1) {
+					line = getArrayListCopy(lineCopy);
 				}
 			}
 		}
@@ -65,9 +71,9 @@ public class NumberGenerator_Latest {
 		}
 	}
 	
-	public static void addNumbers(List<Integer> numbers, List<Integer> tempNumbers) {
+	public static void addNumbers(ArrayList<Integer> line, List<Integer> numbers, List<Integer> tempNumbers) {
 		for(Integer number : tempNumbers) {
-			if(!numbers.contains(number)) {
+			if(!numbers.contains(number) && !line.contains(number)) {
 				numbers.add(number);
 			}
 		}
@@ -115,16 +121,19 @@ public class NumberGenerator_Latest {
 		for(String item : array) {
 			addsWithNumber += getInt(item);
 		}
+		if(addsWithNumber > 9) {
+			addsWithNumber = getAddsWith(addsWithNumber);
+		}
 		return addsWithNumber;
 	}
 	
-	public static int getEndsWith(Integer value) {
+	public static int getEndsWith(Integer number) {
 		Integer endsWithNumber;
-		String[] array = getString(value).split("");
+		String[] array = getString(number).split("");
 		if(array.length > 1) {
 			endsWithNumber = getInt(array[array.length - 1]);
 		} else {
-			endsWithNumber = value;
+			endsWithNumber = number;
 		}
 		return endsWithNumber;
 	}
@@ -156,7 +165,35 @@ public class NumberGenerator_Latest {
 		}
 		return lines;
 	}
-	
+	public static int getNumberSequenceCount(ArrayList<Integer> line) {
+		List<Integer> sortedLineCopy = getSortedLine(line, new NumberComparator());
+		int count = 0;
+		for(int i = 0; i < sortedLineCopy.size(); i++) {
+			if((i + 1 < sortedLineCopy.size()) && (sortedLineCopy.get(i) + 1) == sortedLineCopy.get(i + 1)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public static List<Integer> getSortedLine(List<Integer> numbers, Comparator<Integer> cmp) {
+		List<Integer> listCopy = getListCopy(numbers);
+		Collections.sort(listCopy, cmp);
+		return listCopy;
+	}
+
+	public static List<Integer> getListCopy(List<Integer> list) {
+		return new CopyOnWriteArrayList<Integer>(list);
+	}
+
+	public static ArrayList<Integer> getArrayListCopy(List<Integer> list) {
+		ArrayList<Integer> arrayList = new ArrayList<Integer>();
+		for(Integer number : list) {
+			arrayList.add(number);
+		}
+		return arrayList;
+	}
+
 	public static boolean listContainsList(List<ArrayList<Integer>> rulesList, List<Integer> rule) {
 		for(ArrayList<Integer> list : rulesList) {
 			if(listEqualsList(list, rule)) {
