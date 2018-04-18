@@ -1,30 +1,31 @@
 package com.number.generator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.number.generator.comparator.NumberComparator;
-import com.number.generator.dto.RandomNumber;
 import com.number.generator.type.PlayType_Latest;
 
 public class NumberGenerator_Latest {
 
-	public static PlayType_Latest playType = PlayType_Latest.OZ;
+	public static PlayType_Latest playType = PlayType_Latest.PB;
 	
 	public static void main(String[] args) {
 		
 		int linesRequired = 36;
-		int initialNumbers = 2;
 		
 		//Select 2 numbers between 1 and 36
-		List<ArrayList<Integer>> lines = generateInitialNumbers(linesRequired, initialNumbers);
+		List<ArrayList<Integer>> lines = generateInitialNumbers(linesRequired, playType.getInitialNumbersCount());
 		
 		for(ArrayList<Integer> line : lines) {
 			List<Integer> numbers = new ArrayList<Integer>();
 			for(Integer number : line) {
-				if(number == 32) {
-					String test = "";
-				}
+				
 				List<Integer> ruleNumbers = RuleNumberGenerator.getNumbers(number);
 				if(ruleNumbers != null && !ruleNumbers.isEmpty()) {
 					addNumbers(line, numbers, ruleNumbers);
@@ -53,7 +54,7 @@ public class NumberGenerator_Latest {
 			}
 
 			//Random
-			List<Integer> randomNumbers = getRandomNumbers(numbers, 3);
+			List<Integer> randomNumbers = getRandomNumbers(numbers, playType.getRandomNumberCount());
 			if(!randomNumbers.isEmpty()) {
 				addNumbers(line, numbers, randomNumbers);
 			}
@@ -69,7 +70,7 @@ public class NumberGenerator_Latest {
 					line.add(number);
 				}
 
-				if(getNumberSequenceCount(line) > 1) {
+				if(getNumberSequenceCount(line) > playType.getAllowedNumberSequenceCount()) {
 					line.clear();
 					line.addAll(lineCopy);
 				}
@@ -90,7 +91,7 @@ public class NumberGenerator_Latest {
 	
 	public static List<Integer> getMultiples(Integer number) {
 		List<Integer> numbers = new ArrayList<Integer>();
-		if(number > 5) {
+		if(number > 3) {
 			for(int i = 2; ; i++) {
 				if(number * i > playType.getNumberLimit()) {
 					break;
@@ -130,7 +131,7 @@ public class NumberGenerator_Latest {
 		Random random = new Random();
 		while(list.size() < count) {
 			int number = random.nextInt(playType.getNumberLimit() + 1);
-			if(!numbers.contains(number)) {
+			if(number !=0 && !numbers.contains(number)) {
 				list.add(number);
 			}
 		}
@@ -180,13 +181,14 @@ public class NumberGenerator_Latest {
 				}
 			}
 						
-			if(!listContainsList(lines, line)) {
+			if(getNumberSequenceCount(line) == 0 && !listContainsList(lines, line)) {
 				lines.add(line);
 				linesRequired--;
 			}
 		}
 		return lines;
 	}
+	
 	public static int getNumberSequenceCount(ArrayList<Integer> line) {
 		List<Integer> sortedLineCopy = getSortedLine(line, new NumberComparator());
 		int count = 0;

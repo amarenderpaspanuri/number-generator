@@ -1,30 +1,28 @@
 package com.number.generator.type;
 
 public enum PlayType_Latest {
-    OZ("oz",   45, 7, 0,  false, false),
-    PB("pb",   40, 7, 20, true,  false),
-    SL("sl",   45, 6, 0,  false, false),
-    ML("ml",   45, 6, 0,  false, false),
-    WL("wl",   45, 6, 0,  false, false),
-    SFL("sfl", 37, 8, 0,  false, false);
+    OZ("oz",   45, 7, 2, 1, 3),
+    PB("pb",   40, 7, 2, 1, 3),
+    SL("sl",   45, 6, 2, 1, 3),
+    ML("ml",   45, 6, 2, 1, 3),
+    WL("wl",   45, 6, 2, 1, 3),
+    SFL("sfl", 37, 8, 3, 2, 3);
     
 	private String value;
 	private int numberLimit;
 	private int numbersPerLine;
-	private int supplementaryNumberLimit;
-	private boolean supplemantaryRequired;
-	private boolean duplicatesAllowed;
+	private int initialNumbersCount;
+	private int allowedNumberSequenceCount;
+	private int randomNumberCount;
 	
-	PlayType_Latest(String value, int numberLimit, int numbersPerLine,
-    		int supplementaryNumberLimit, boolean supplemantaryRequired, 
-    		boolean duplicatesAllowed) {
+	PlayType_Latest(String value, int numberLimit, int numbersPerLine, int initialNumbersCount, int allowedNumberSequenceCount, int randomNumberCount) {
     	this.value = value;
     	this.numberLimit = numberLimit;
     	this.numbersPerLine = numbersPerLine;
-    	this.supplementaryNumberLimit = supplementaryNumberLimit;
-    	this.supplemantaryRequired = supplemantaryRequired;
-    	this.duplicatesAllowed = duplicatesAllowed;
-    }
+    	this.initialNumbersCount = initialNumbersCount;
+    	this.allowedNumberSequenceCount = allowedNumberSequenceCount;
+    	this.randomNumberCount = randomNumberCount;
+	}
     
     public String getValue() {
 		return value;
@@ -50,27 +48,27 @@ public enum PlayType_Latest {
 		this.numbersPerLine = numbersPerLine;
 	}
 
-	public int getSupplementaryNumberLimit() {
-		return supplementaryNumberLimit;
+	public int getRandomNumberCount() {
+		return randomNumberCount;
 	}
 
-	public void setSupplementaryNumberLimit(int supplementaryNumberLimit) {
-		this.supplementaryNumberLimit = supplementaryNumberLimit;
+	public void setRandomNumberCount(int randomNumberCount) {
+		this.randomNumberCount = randomNumberCount;
 	}
 
-	public boolean isSupplemantaryRequired() {
-		return supplemantaryRequired;
+	public int getInitialNumbersCount() {
+		return initialNumbersCount;
 	}
 
-	public void setSupplemantaryRequired(boolean supplemantaryRequired) {
-		this.supplemantaryRequired = supplemantaryRequired;
+	public void setInitialNumbersCount(int initialNumbersCount) {
+		this.initialNumbersCount = initialNumbersCount;
 	}
 
-	public boolean isDuplicatesAllowed() {
-		return duplicatesAllowed;
+	public int getAllowedNumberSequenceCount() {
+		return allowedNumberSequenceCount;
 	}
 
-	public void setDuplicatesAllowed(boolean duplicatesAllowed) {
-		this.duplicatesAllowed = duplicatesAllowed;
+	public void setAllowedNumberSequenceCount(int allowedNumberSequenceCount) {
+		this.allowedNumberSequenceCount = allowedNumberSequenceCount;
 	}
 }
