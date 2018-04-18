@@ -26,9 +26,9 @@ public final class RuleNumberGenerator {
 		rules.put(13, Arrays.asList(new Integer[]{10}));
 		rules.put(14, Arrays.asList(new Integer[]{17}));
 		rules.put(15, Arrays.asList(new Integer[]{10, 18}));
-		rules.put(16, Arrays.asList(new Integer[]{19}));
+		rules.put(16, Arrays.asList(new Integer[]{18, 19}));
 		rules.put(17, Arrays.asList(new Integer[]{14}));
-		rules.put(18, Arrays.asList(new Integer[]{15}));
+		rules.put(18, Arrays.asList(new Integer[]{15, 16}));
 		rules.put(19, Arrays.asList(new Integer[]{16}));
 		rules.put(20, Arrays.asList(new Integer[]{}));
 		rules.put(21, Arrays.asList(new Integer[]{}));
