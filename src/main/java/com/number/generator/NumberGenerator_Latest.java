@@ -52,6 +52,14 @@ public class NumberGenerator_Latest {
 				}
 			}
 
+			//Random
+			List<Integer> randomNumbers = getRandomNumbers(numbers, 3);
+			if(!randomNumbers.isEmpty()) {
+				addNumbers(line, numbers, randomNumbers);
+			}
+
+			Collections.shuffle(numbers);
+
 			List<Integer> lineCopy = getListCopy(line);
 			Random random = new Random();
 			while(line.size() < playType.getNumbersPerLine()) {
@@ -62,7 +70,8 @@ public class NumberGenerator_Latest {
 				}
 
 				if(getNumberSequenceCount(line) > 1) {
-					line = getArrayListCopy(lineCopy);
+					line.clear();
+					line.addAll(lineCopy);
 				}
 			}
 		}
@@ -81,7 +90,7 @@ public class NumberGenerator_Latest {
 	
 	public static List<Integer> getMultiples(Integer number) {
 		List<Integer> numbers = new ArrayList<Integer>();
-		if(number > 7) {
+		if(number > 5) {
 			for(int i = 2; ; i++) {
 				if(number * i > playType.getNumberLimit()) {
 					break;
@@ -103,7 +112,7 @@ public class NumberGenerator_Latest {
 		}
 		return numbers;
 	}
-	
+
 	public static List<Integer> getEndsWithNumbers(Integer number) {
 		List<Integer> numbers = new ArrayList<Integer>();
 		
@@ -114,7 +123,20 @@ public class NumberGenerator_Latest {
 		}
 		return numbers;
 	}
-	
+
+	public static List<Integer> getRandomNumbers(List<Integer> numbers, Integer count) {
+		List<Integer> list = new ArrayList<Integer>();
+
+		Random random = new Random();
+		while(list.size() < count) {
+			int number = random.nextInt(playType.getNumberLimit() + 1);
+			if(!numbers.contains(number)) {
+				list.add(number);
+			}
+		}
+		return list;
+	}
+
 	public static Integer getAddsWith(Integer number) {
 		Integer addsWithNumber = 0;
 		String[] array = getString(number).split("");
@@ -184,14 +206,6 @@ public class NumberGenerator_Latest {
 
 	public static List<Integer> getListCopy(List<Integer> list) {
 		return new CopyOnWriteArrayList<Integer>(list);
-	}
-
-	public static ArrayList<Integer> getArrayListCopy(List<Integer> list) {
-		ArrayList<Integer> arrayList = new ArrayList<Integer>();
-		for(Integer number : list) {
-			arrayList.add(number);
-		}
-		return arrayList;
 	}
 
 	public static boolean listContainsList(List<ArrayList<Integer>> rulesList, List<Integer> rule) {
