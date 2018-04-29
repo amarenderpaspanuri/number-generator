@@ -2,7 +2,7 @@ package com.number.generator.type;
 
 public enum PlayType_Latest {
     OZ("oz",   45, 7, 2, 1, 3),
-    PB("pb",   40, 7, 2, 1, 3),
+    PB("pb",   35, 8, 3, 1, 3),
     SL("sl",   45, 6, 2, 1, 3),
     ML("ml",   45, 6, 2, 1, 3),
     WL("wl",   45, 6, 2, 1, 3),

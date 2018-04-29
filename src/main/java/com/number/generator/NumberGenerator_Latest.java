@@ -13,11 +13,11 @@ import com.number.generator.type.PlayType_Latest;
 
 public class NumberGenerator_Latest {
 
-	public static PlayType_Latest playType = PlayType_Latest.PB;
+	public static PlayType_Latest playType = PlayType_Latest.SL;
 	
 	public static void main(String[] args) {
 		
-		int linesRequired = 36;
+		int linesRequired = 45;
 		
 		//Select 2 numbers between 1 and 36
 		List<ArrayList<Integer>> lines = generateInitialNumbers(linesRequired, playType.getInitialNumbersCount());
