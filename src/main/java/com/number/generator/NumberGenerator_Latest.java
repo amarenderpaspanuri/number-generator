@@ -1,11 +1,6 @@
 package com.number.generator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.number.generator.comparator.NumberComparator;
@@ -13,14 +8,17 @@ import com.number.generator.type.PlayType_Latest;
 
 public class NumberGenerator_Latest {
 
-	public static PlayType_Latest playType = PlayType_Latest.SL;
+	public static PlayType_Latest playType;
 	
 	public static void main(String[] args) {
 		
-		int linesRequired = 45;
+		playType = PlayType_Latest.OZ;
+
+		List<Integer> ozNumbers = Arrays.asList(new Integer[]{2, 11, 29, 4, 7, 19, });
+		List<Integer> lastNumbers = ozNumbers;
 		
 		//Select 2 numbers between 1 and 36
-		List<ArrayList<Integer>> lines = generateInitialNumbers(linesRequired, playType.getInitialNumbersCount());
+		List<ArrayList<Integer>> lines = generateInitialNumbers();
 		
 		for(ArrayList<Integer> line : lines) {
 			List<Integer> numbers = new ArrayList<Integer>();
@@ -51,6 +49,11 @@ public class NumberGenerator_Latest {
 				if(!endsWithNumbers.isEmpty()) {
 					addNumbers(line, numbers, endsWithNumbers);
 				}
+			}
+
+			//numbers
+			if(!lastNumbers.isEmpty()) {
+				addNumbers(line, numbers, lastNumbers);
 			}
 
 			//Random
@@ -168,12 +171,34 @@ public class NumberGenerator_Latest {
 	public static int getInt(String value) {
 		return Integer.parseInt(value);
 	}
-	public static List<ArrayList<Integer>> generateInitialNumbers(int linesRequired, int initialNumbers) {
+
+	public static List<ArrayList<Integer>> generateInitialNumbers() {
+
 		List<ArrayList<Integer>> lines = new ArrayList<ArrayList<Integer>>();
+		for(int i = 1; i<= playType.getNumberLimit(); i++) {
+			ArrayList<Integer> line = new ArrayList<Integer>();
+			line.add(i);
+			lines.add(line);
+		}
+
 		Random random = new Random();
-		while(linesRequired != 0) {
+		for(int j = 0; j < playType.getInitialNumbersCount(); ) {
+				ArrayList<Integer> line = lines.get(j);
+			for(int i = 1; i < playType.getInitialNumbersCount(); ) {
+				int number = random.nextInt(playType.getNumberLimit());
+				if(number != 0 && !line.contains(number)) {
+					line.add(number);
+					i++;
+				}
+			}
+			if(getNumberSequenceCount(line) == 0 && !listContainsList(lines, line)) {
+				lines.add(line);
+				j++;
+			}
+		}
+		/*while(playType.getNumberLimit() != 0) {
 			ArrayList<Integer> line = new ArrayList<Integer>();	
-			for(int i = 1; i <= initialNumbers; ) {
+			for(int i = 1; i <= playType.getInitialNumbersCount(); ) {
 				int number = random.nextInt(playType.getNumberLimit());
 				if(number != 0 && !line.contains(number)) {
 					line.add(number);
@@ -185,7 +210,7 @@ public class NumberGenerator_Latest {
 				lines.add(line);
 				linesRequired--;
 			}
-		}
+		}*/
 		return lines;
 	}
 	
