@@ -14,7 +14,7 @@ public class NumberGenerator_Latest {
 		
 		playType = PlayType_Latest.OZ;
 
-		List<Integer> ozNumbers = Arrays.asList(new Integer[]{2, 11, 29, 4, 7, 19, });
+		List<Integer> ozNumbers = Arrays.asList(new Integer[]{2, 5, 11, 29, 4, 7, 19, 31, 33});
 		List<Integer> lastNumbers = ozNumbers;
 		
 		//Select 2 numbers between 1 and 36
@@ -182,18 +182,20 @@ public class NumberGenerator_Latest {
 		}
 
 		Random random = new Random();
-		for(int j = 0; j < playType.getInitialNumbersCount(); ) {
-				ArrayList<Integer> line = lines.get(j);
+		for(int j = 0; j < playType.getNumberLimit(); ) {
+			ArrayList<Integer> line = lines.get(j);
+			int number = 0;
 			for(int i = 1; i < playType.getInitialNumbersCount(); ) {
-				int number = random.nextInt(playType.getNumberLimit());
-				if(number != 0 && !line.contains(number)) {
-					line.add(number);
-					i++;
+				ArrayList<Integer> lineCopy = getArrayListCopy(line);
+				number = random.nextInt(playType.getNumberLimit());
+				if(number != 0 && !lineCopy.contains(number)) {
+					lineCopy.add(number);
+					if(getNumberSequenceCount(lineCopy) == 0 && !listContainsList(lines, lineCopy)) {
+						line.add(number);
+						j++;
+						i++;
+					}
 				}
-			}
-			if(getNumberSequenceCount(line) == 0 && !listContainsList(lines, line)) {
-				lines.add(line);
-				j++;
 			}
 		}
 		/*while(playType.getNumberLimit() != 0) {
@@ -233,6 +235,14 @@ public class NumberGenerator_Latest {
 
 	public static List<Integer> getListCopy(List<Integer> list) {
 		return new CopyOnWriteArrayList<Integer>(list);
+	}
+
+	public static ArrayList<Integer> getArrayListCopy(List<Integer> list) {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		for(Integer number : list) {
+			temp.add(number);
+		}
+		return temp;
 	}
 
 	public static boolean listContainsList(List<ArrayList<Integer>> rulesList, List<Integer> rule) {
