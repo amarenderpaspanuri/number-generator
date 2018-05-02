@@ -9,14 +9,17 @@ import com.number.generator.type.PlayType_Latest;
 public class NumberGenerator_Latest {
 
 	public static PlayType_Latest playType;
+
+	// O --> 2, 5, 11, 29, 4, 7, 19, 31, 33
+	// S --> 2, 5, 11, 29, 4, 7, 19, 31, 33
+	private static List<Integer> includeList = Arrays.asList(new Integer[]{2, 5, 11, 29, 4, 7, 19, 31, 33});
+
+	private static List<Integer> excludeList = Arrays.asList(new Integer[]{1, 3, 6, 14, 16, 18, 20, 21, 24, 37, 38, 39, 40, 41, 42, 43, 44, 45});
 	
 	public static void main(String[] args) {
 		
 		playType = PlayType_Latest.OZ;
 
-		List<Integer> ozNumbers = Arrays.asList(new Integer[]{2, 5, 11, 29, 4, 7, 19, 31, 33});
-		List<Integer> lastNumbers = ozNumbers;
-		
 		//Select 2 numbers between 1 and 36
 		List<ArrayList<Integer>> lines = generateInitialNumbers();
 		
@@ -51,9 +54,9 @@ public class NumberGenerator_Latest {
 				}
 			}
 
-			//numbers
-			if(!lastNumbers.isEmpty()) {
-				addNumbers(line, numbers, lastNumbers);
+			//Include Numbers
+			if(!includeList.isEmpty()) {
+				addNumbers(line, numbers, includeList);
 			}
 
 			//Random
@@ -176,24 +179,28 @@ public class NumberGenerator_Latest {
 
 		List<ArrayList<Integer>> lines = new ArrayList<ArrayList<Integer>>();
 		for(int i = 1; i<= playType.getNumberLimit(); i++) {
-			ArrayList<Integer> line = new ArrayList<Integer>();
-			line.add(i);
-			lines.add(line);
+			if(!excludeList.contains(i)) {
+				ArrayList<Integer> line = new ArrayList<Integer>();
+				line.add(i);
+				lines.add(line);
+			}
 		}
 
 		Random random = new Random();
-		for(int j = 0; j < playType.getNumberLimit(); ) {
+		for(int j = 0; j < lines.size(); ) {
 			ArrayList<Integer> line = lines.get(j);
 			int number = 0;
 			for(int i = 1; i < playType.getInitialNumbersCount(); ) {
 				ArrayList<Integer> lineCopy = getArrayListCopy(line);
 				number = random.nextInt(playType.getNumberLimit());
-				if(number != 0 && !lineCopy.contains(number)) {
-					lineCopy.add(number);
-					if(getNumberSequenceCount(lineCopy) == 0 && !listContainsList(lines, lineCopy)) {
-						line.add(number);
-						j++;
-						i++;
+				if(!excludeList.contains(number)) {
+					if(number != 0 && !lineCopy.contains(number)) {
+						lineCopy.add(number);
+						if(getNumberSequenceCount(lineCopy) == 0 && !listContainsList(lines, lineCopy)) {
+							line.add(number);
+							j++;
+							i++;
+						}
 					}
 				}
 			}
