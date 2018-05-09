@@ -9,24 +9,43 @@ import com.number.generator.type.PlayType_Latest;
 public class NumberGenerator_Latest {
 
 	public static PlayType_Latest playType;
+	
+	private static List<Integer> includeList;
+	
+	private static List<Integer> excludeList;
 
-	// O --> 2, 5, 11, 29, 4, 7, 19, 31, 33
-	// S --> 2, 5, 11, 29, 4, 7, 19, 31, 33
-	private static List<Integer> includeList = Arrays.asList(new Integer[]{2, 5, 11, 29, 4, 7, 19, 31, 33});
+	// O 
+	private static List<Integer> oIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	// P
+	private static List<Integer> pIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	// S
+	private static List<Integer> sIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	// SFL
+	private static List<Integer> sflIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
 
-	private static List<Integer> excludeList = Arrays.asList(new Integer[]{1, 3, 6, 14, 16, 18, 20, 21, 24, 37, 38, 39, 40, 41, 42, 43, 44, 45});
+	// O --> 45 - 25 = 20
+	private static List<Integer> oExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37, 38, 40, 41, 43, 44, 45});
+	// P --> 35 - 17 = 18
+	private static List<Integer> pExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34});
+	// S --> 35 - 17 = 18
+	private static List<Integer> sExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37, 39, 40, 41, 43});
+	// SFL --> 35 - 17 = 18
+	private static List<Integer> sflExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37});
 	
 	public static void main(String[] args) {
 		
-		playType = PlayType_Latest.OZ;
+		playType = PlayType_Latest.SL;
+		
+		initPlayType();
 
-		//Select 2 numbers between 1 and 36
+		//Select 2 numbers between 1 and number limit
 		List<ArrayList<Integer>> lines = generateInitialNumbers();
 		
 		for(ArrayList<Integer> line : lines) {
 			List<Integer> numbers = new ArrayList<Integer>();
 			for(Integer number : line) {
 				
+				//Rules
 				List<Integer> ruleNumbers = RuleNumberGenerator.getNumbers(number);
 				if(ruleNumbers != null && !ruleNumbers.isEmpty()) {
 					addNumbers(line, numbers, ruleNumbers);
@@ -44,7 +63,6 @@ public class NumberGenerator_Latest {
 				if(!addsWithNumbers.isEmpty()) {
 					addNumbers(line, numbers, addsWithNumbers);
 				}
-				
 				
 				//Ends With
 				Integer endsWithNumber = getEndsWith(number);
@@ -92,6 +110,22 @@ public class NumberGenerator_Latest {
 			if(!numbers.contains(number) && !line.contains(number)) {
 				numbers.add(number);
 			}
+		}
+	}
+	
+	public static void initPlayType() {
+		if(playType == PlayType_Latest.OZ) {
+			includeList = oIncludeList;
+			excludeList = oExcludeList;
+		} else if(playType == PlayType_Latest.PB) {
+			includeList = pIncludeList;
+			excludeList = pExcludeList;
+		} else if(playType == PlayType_Latest.SL) {
+			includeList = sIncludeList;
+			excludeList = sExcludeList;
+		} else if(playType == PlayType_Latest.SFL) {
+			includeList = sflIncludeList;
+			excludeList = sflExcludeList;
 		}
 	}
 	
