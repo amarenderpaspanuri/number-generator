@@ -8,33 +8,38 @@ import com.number.generator.type.PlayType_Latest;
 
 public class NumberGenerator_Latest {
 
-	public static PlayType_Latest playType;
+	public static PlayType_Latest playType = PlayType_Latest.PB;
 	
 	private static List<Integer> includeList;
 	
-	private static List<Integer> excludeList;
+	private static List<Integer> excludeList = new ArrayList<Integer>();
 
 	// O 
-	private static List<Integer> oIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	private static List<Integer> oIncludeList = Arrays.asList(
+			new Integer[]{15, 3, 4, 5, 7, 8, 9, 11, 13, 16, 18, 19, 23, 25, 27, 29, 31, 34, 36, 37, 38, 39, 41, 43, 45}); 
+	                   
+	private static List<Integer> oExcludeList = Arrays.asList(
+			new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37, 38, 40, 41, 43, 44});
+	
 	// P
-	private static List<Integer> pIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	private static List<Integer> pIncludeList = Arrays.asList(
+			new Integer[]{15, 1, 3, 4, 5, 6, 7, 9, 12, 13, 14, 16, 19, 20, 24, 25, 26, 32, 33, 34, 35});
+	private static List<Integer> pExcludeList = Arrays.asList(
+			new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34});
+	
 	// S
-	private static List<Integer> sIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	private static List<Integer> sIncludeList = Arrays.asList(
+			new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	private static List<Integer> sExcludeList = Arrays.asList(
+			new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37, 39, 40, 41, 43});
+	
 	// SFL
-	private static List<Integer> sflIncludeList = Arrays.asList(new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
-
-	// O --> 45 - 25 = 20
-	private static List<Integer> oExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37, 38, 40, 41, 43, 44, 45});
-	// P --> 35 - 17 = 18
-	private static List<Integer> pExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34});
-	// S --> 35 - 17 = 18
-	private static List<Integer> sExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37, 39, 40, 41, 43});
-	// SFL --> 35 - 17 = 18
-	private static List<Integer> sflExcludeList = Arrays.asList(new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37});
+	private static List<Integer> sflIncludeList = Arrays.asList(
+			new Integer[]{2, 33, 35, 29, 7, 17, 23, 8});
+	private static List<Integer> sflExcludeList = Arrays.asList(
+			new Integer[]{1, 2, 3, 6, 10, 12, 13, 14, 16, 18, 20, 21, 22, 24, 28, 31, 34, 36, 37});
 	
 	public static void main(String[] args) {
-		
-		playType = PlayType_Latest.SL;
 		
 		initPlayType();
 
@@ -80,7 +85,7 @@ public class NumberGenerator_Latest {
 			//Random
 			List<Integer> randomNumbers = getRandomNumbers(numbers, playType.getRandomNumberCount());
 			if(!randomNumbers.isEmpty()) {
-				addNumbers(line, numbers, randomNumbers);
+				//addNumbers(line, numbers, randomNumbers);
 			}
 
 			Collections.shuffle(numbers);
@@ -116,16 +121,21 @@ public class NumberGenerator_Latest {
 	public static void initPlayType() {
 		if(playType == PlayType_Latest.OZ) {
 			includeList = oIncludeList;
-			excludeList = oExcludeList;
 		} else if(playType == PlayType_Latest.PB) {
 			includeList = pIncludeList;
-			excludeList = pExcludeList;
 		} else if(playType == PlayType_Latest.SL) {
 			includeList = sIncludeList;
-			excludeList = sExcludeList;
 		} else if(playType == PlayType_Latest.SFL) {
 			includeList = sflIncludeList;
-			excludeList = sflExcludeList;
+		}
+		prepareExcludeList();
+	}
+	
+	private static void prepareExcludeList() {
+		for(int i = 1; i <= playType.getNumberLimit(); i++) {
+			if(!includeList.contains(i)) {
+				excludeList.add(i);
+			}
 		}
 	}
 	
@@ -220,25 +230,28 @@ public class NumberGenerator_Latest {
 			}
 		}
 
-		Random random = new Random();
-		for(int j = 0; j < lines.size(); ) {
-			ArrayList<Integer> line = lines.get(j);
-			int number = 0;
-			for(int i = 1; i < playType.getInitialNumbersCount(); ) {
-				ArrayList<Integer> lineCopy = getArrayListCopy(line);
-				number = random.nextInt(playType.getNumberLimit());
-				if(!excludeList.contains(number)) {
-					if(number != 0 && !lineCopy.contains(number)) {
-						lineCopy.add(number);
-						if(getNumberSequenceCount(lineCopy) == 0 && !listContainsList(lines, lineCopy)) {
-							line.add(number);
-							j++;
-							i++;
+		if(playType.getInitialNumbersCount() > 1){
+			Random random = new Random();
+			for(int j = 0; j < lines.size(); ) {
+				ArrayList<Integer> line = lines.get(j);
+				int number = 0;
+				for(int i = 1; i < playType.getInitialNumbersCount(); ) {
+					ArrayList<Integer> lineCopy = getArrayListCopy(line);
+					number = random.nextInt(playType.getNumberLimit());
+					if(!excludeList.contains(number)) {
+						if(number != 0 && !lineCopy.contains(number)) {
+							lineCopy.add(number);
+							if(getNumberSequenceCount(lineCopy) == 0 && !listContainsList(lines, lineCopy)) {
+								line.add(number);
+								j++;
+								i++;
+							}
 						}
 					}
 				}
 			}
 		}
+		
 		/*while(playType.getNumberLimit() != 0) {
 			ArrayList<Integer> line = new ArrayList<Integer>();	
 			for(int i = 1; i <= playType.getInitialNumbersCount(); ) {
